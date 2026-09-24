@@ -1,0 +1,7 @@
+# Use predictable line endings for documentation and ordinary text files.
+* text=auto eol=lf
+
+# Preserve exact bytes used by dataset/source checksums and recorded artifacts.
+data/*.jsonl -text
+benchmark/*.py -text
+results/local-*/*.json -text

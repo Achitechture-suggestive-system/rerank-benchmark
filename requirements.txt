@@ -1,0 +1,5 @@
+# Install the appropriate CPU/CUDA torch build for your machine first.
+torch>=2.6
+transformers>=4.51,<6
+safetensors>=0.5
+sentencepiece>=0.2
