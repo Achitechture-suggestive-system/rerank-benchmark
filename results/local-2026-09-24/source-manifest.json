@@ -1,0 +1,10 @@
+{
+  "purpose": "Source files included in implementation_sha256 when the completed BM25 and BGE runs started; later report/inspect additions do not change inference scores.",
+  "implementation_sha256": "72fc5ab787a9efa54af9a45107f1da99b35bd79272b56201851c3e393b95e151",
+  "files": {
+    "benchmark/__init__.py": "571ce9f73420566c2b7b796465ce07fded630222736845cc26989df2f956e97d",
+    "benchmark/backends.py": "5a8fa59a51db387218ba7f36a74f89950f1e8e38a72ac247ddf307d597528868",
+    "benchmark/metrics.py": "731ef9d37e68e49ae48db870af1b36cf05ab2af19e1877a93b7710a10b29e26f",
+    "benchmark/run.py": "701f81384e33d9ad7b7e0e2a4c9376b1771544261a1ae20feddb894e8d328449"
+  }
+}

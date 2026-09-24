@@ -1,0 +1,3680 @@
+{
+  "schema_version": 1,
+  "model": "bge-m3",
+  "model_id": "BAAI/bge-reranker-v2-m3",
+  "status": "complete",
+  "started_utc": "2026-09-24T09:06:56.108889+00:00",
+  "dataset_sha256": "c03286ee60f320652abb94a5863e07bebebf09a8c5ca35ff386a8f6a680b1a42",
+  "implementation_sha256": "72fc5ab787a9efa54af9a45107f1da99b35bd79272b56201851c3e393b95e151",
+  "query_ids": [
+    "negation-cache-vi",
+    "negation-cache-en",
+    "negation-logs-vi",
+    "negation-logs-en",
+    "and-isolation-vi",
+    "and-isolation-en",
+    "or-auth-vi",
+    "or-auth-en",
+    "numeric-p95-vi",
+    "numeric-p95-en",
+    "numeric-units-vi",
+    "numeric-units-en",
+    "temporal-policy-vi",
+    "temporal-policy-en",
+    "temporal-order-vi",
+    "temporal-order-en",
+    "causal-random-vi",
+    "causal-random-en",
+    "causal-incident-vi",
+    "causal-incident-en",
+    "multihop-region-vi",
+    "multihop-region-en",
+    "multihop-permission-vi",
+    "multihop-permission-en",
+    "code-boundary-vi",
+    "code-boundary-en",
+    "code-idempotent-vi",
+    "code-idempotent-en",
+    "entity-owner-vi",
+    "entity-owner-en",
+    "entity-version-vi",
+    "entity-version-en",
+    "crosslingual-delete-vi",
+    "crosslingual-delete-en",
+    "crosslingual-retry-vi",
+    "crosslingual-retry-en",
+    "injection-cache-vi",
+    "injection-cache-en",
+    "injection-audit-vi",
+    "injection-audit-en",
+    "evidence-measured-vi",
+    "evidence-measured-en",
+    "evidence-quantifier-vi",
+    "evidence-quantifier-en",
+    "long-tail-vi",
+    "long-tail-en",
+    "long-middle-vi",
+    "long-middle-en",
+    "ood-cryobot-vi",
+    "ood-cryobot-en",
+    "ood-guarantee-vi",
+    "ood-guarantee-en",
+    "ood-private-vi",
+    "ood-private-en",
+    "ood-missing-vi",
+    "ood-missing-en"
+  ],
+  "selected_queries": 56,
+  "full_dataset": true,
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "logical_cpus": 20,
+    "packages": {
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tokenizers": "0.23.2",
+      "huggingface-hub": "1.32.0",
+      "safetensors": "0.8.0"
+    },
+    "nvidia_smi": "NVIDIA GeForce RTX 3060 Laptop GPU, 6144 MiB, 1874 MiB, 591.86",
+    "ram_total_bytes": 16890978304,
+    "ram_available_bytes": 1851609088
+  },
+  "config": {
+    "models": [
+      "bge-m3"
+    ],
+    "dataset": "C:\\disk D\\rerank-benchmark\\data\\evidence_depth.jsonl",
+    "output": "results/local-2026-09-24",
+    "device": "cpu",
+    "dtype": "float32",
+    "batch_size": 1,
+    "max_length": 1024,
+    "threads": 4,
+    "seed": 20260924,
+    "limit": 0,
+    "local_files_only": true,
+    "allow_large_models": false,
+    "revision": null,
+    "cutoff_layer": 28,
+    "compress_ratio": 2,
+    "compress_layers": [
+      24
+    ],
+    "worker": true
+  },
+  "records": [
+    {
+      "id": "negation-cache-vi",
+      "group_id": "negation-cache",
+      "category": "negation",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm thiết kế cho phép xem catalog khi mất mạng nhưng tuyệt đối không lưu số thẻ trên thiết bị.",
+      "candidate_ids": [
+        "negation-cache-d4",
+        "negation-cache-d5",
+        "negation-cache-d2",
+        "negation-cache-d1",
+        "negation-cache-d0",
+        "negation-cache-d3"
+      ],
+      "ranking": [
+        "negation-cache-d5",
+        "negation-cache-d2",
+        "negation-cache-d0",
+        "negation-cache-d3",
+        "negation-cache-d4",
+        "negation-cache-d1"
+      ],
+      "scores": {
+        "negation-cache-d4": -5.206385612487793,
+        "negation-cache-d5": -0.5914461612701416,
+        "negation-cache-d2": -1.7787082195281982,
+        "negation-cache-d1": -5.468717575073242,
+        "negation-cache-d0": -3.389317035675049,
+        "negation-cache-d3": -4.1260833740234375
+      },
+      "latency_seconds": 2.362675999997009,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          56,
+          44,
+          45,
+          45,
+          51,
+          49
+        ],
+        "retained_lengths": [
+          56,
+          44,
+          45,
+          45,
+          51,
+          49
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.4258585191080662,
+        "mrr5": 0.25,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.0,
+        "hard_negative_win": 0.0
+      }
+    },
+    {
+      "id": "negation-cache-en",
+      "group_id": "negation-cache",
+      "category": "negation",
+      "language": "en",
+      "track": "core",
+      "query": "Find a design that supports offline catalog viewing and never stores card numbers on the device.",
+      "candidate_ids": [
+        "negation-cache-d0",
+        "negation-cache-d2",
+        "negation-cache-d4",
+        "negation-cache-d3",
+        "negation-cache-d1",
+        "negation-cache-d5"
+      ],
+      "ranking": [
+        "negation-cache-d2",
+        "negation-cache-d4",
+        "negation-cache-d5",
+        "negation-cache-d0",
+        "negation-cache-d1",
+        "negation-cache-d3"
+      ],
+      "scores": {
+        "negation-cache-d0": -1.961653470993042,
+        "negation-cache-d2": 1.3600165843963623,
+        "negation-cache-d4": -0.7600025534629822,
+        "negation-cache-d3": -5.538372039794922,
+        "negation-cache-d1": -4.797065734863281,
+        "negation-cache-d5": -1.04792320728302
+      },
+      "latency_seconds": 2.2497858999995515,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          49,
+          43,
+          54,
+          47,
+          43,
+          42
+        ],
+        "retained_lengths": [
+          49,
+          43,
+          54,
+          47,
+          43,
+          42
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.5113881456198478,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "negation-logs-vi",
+      "group_id": "negation-logs",
+      "category": "negation",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn giải pháp giữ audit log nhưng loại bỏ mật khẩu và access token khỏi log.",
+      "candidate_ids": [
+        "negation-logs-d5",
+        "negation-logs-d4",
+        "negation-logs-d2",
+        "negation-logs-d3",
+        "negation-logs-d1",
+        "negation-logs-d0"
+      ],
+      "ranking": [
+        "negation-logs-d3",
+        "negation-logs-d1",
+        "negation-logs-d2",
+        "negation-logs-d0",
+        "negation-logs-d4",
+        "negation-logs-d5"
+      ],
+      "scores": {
+        "negation-logs-d5": -6.472875118255615,
+        "negation-logs-d4": -3.954469680786133,
+        "negation-logs-d2": -0.6713606715202332,
+        "negation-logs-d3": 0.3495067059993744,
+        "negation-logs-d1": -0.4976003170013428,
+        "negation-logs-d0": -3.2761166095733643
+      },
+      "latency_seconds": 2.03654010000173,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          37,
+          40,
+          58,
+          41,
+          46,
+          38
+        ],
+        "retained_lengths": [
+          37,
+          40,
+          58,
+          41,
+          46,
+          38
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.5741414090136012,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "negation-logs-en",
+      "group_id": "negation-logs",
+      "category": "negation",
+      "language": "en",
+      "track": "core",
+      "query": "Select a solution that retains audit logs while excluding passwords and access tokens from those logs.",
+      "candidate_ids": [
+        "negation-logs-d0",
+        "negation-logs-d5",
+        "negation-logs-d4",
+        "negation-logs-d3",
+        "negation-logs-d1",
+        "negation-logs-d2"
+      ],
+      "ranking": [
+        "negation-logs-d1",
+        "negation-logs-d2",
+        "negation-logs-d3",
+        "negation-logs-d0",
+        "negation-logs-d4",
+        "negation-logs-d5"
+      ],
+      "scores": {
+        "negation-logs-d0": -2.284071683883667,
+        "negation-logs-d5": -4.846127510070801,
+        "negation-logs-d4": -3.5526742935180664,
+        "negation-logs-d3": -1.7110157012939453,
+        "negation-logs-d1": 0.7583779096603394,
+        "negation-logs-d2": -0.4880518913269043
+      },
+      "latency_seconds": 2.2689031999980216,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          43,
+          42,
+          45,
+          46,
+          51,
+          63
+        ],
+        "retained_lengths": [
+          43,
+          42,
+          45,
+          46,
+          51,
+          63
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7895959410076381,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "and-isolation-vi",
+      "group_id": "and-isolation",
+      "category": "conjunction",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm hệ thống đồng thời cô lập dữ liệu tenant và mã hóa bản sao lưu bằng khóa riêng của từng tenant.",
+      "candidate_ids": [
+        "and-isolation-d2",
+        "and-isolation-d3",
+        "and-isolation-d1",
+        "and-isolation-d0",
+        "and-isolation-d4",
+        "and-isolation-d5"
+      ],
+      "ranking": [
+        "and-isolation-d3",
+        "and-isolation-d0",
+        "and-isolation-d5",
+        "and-isolation-d1",
+        "and-isolation-d4",
+        "and-isolation-d2"
+      ],
+      "scores": {
+        "and-isolation-d2": -6.698391914367676,
+        "and-isolation-d3": 2.7730472087860107,
+        "and-isolation-d1": -0.7068769931793213,
+        "and-isolation-d0": 0.33752429485321045,
+        "and-isolation-d4": -0.9806815981864929,
+        "and-isolation-d5": -0.4253941774368286
+      },
+      "latency_seconds": 2.5156341999972938,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          40,
+          66,
+          54,
+          50,
+          54,
+          53
+        ],
+        "retained_lengths": [
+          40,
+          66,
+          54,
+          50,
+          54,
+          53
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9049495058460971,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "and-isolation-en",
+      "group_id": "and-isolation",
+      "category": "conjunction",
+      "language": "en",
+      "track": "core",
+      "query": "Find a system with both tenant data isolation and backups encrypted using a separate key for each tenant.",
+      "candidate_ids": [
+        "and-isolation-d5",
+        "and-isolation-d1",
+        "and-isolation-d4",
+        "and-isolation-d0",
+        "and-isolation-d2",
+        "and-isolation-d3"
+      ],
+      "ranking": [
+        "and-isolation-d3",
+        "and-isolation-d1",
+        "and-isolation-d5",
+        "and-isolation-d0",
+        "and-isolation-d4",
+        "and-isolation-d2"
+      ],
+      "scores": {
+        "and-isolation-d5": -0.20116645097732544,
+        "and-isolation-d1": 0.7025564908981323,
+        "and-isolation-d4": -3.471602201461792,
+        "and-isolation-d0": -0.505457878112793,
+        "and-isolation-d2": -6.784385681152344,
+        "and-isolation-d3": 4.193807125091553
+      },
+      "latency_seconds": 2.418128400000569,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          52,
+          53,
+          53,
+          49,
+          39,
+          65
+        ],
+        "retained_lengths": [
+          52,
+          53,
+          53,
+          49,
+          39,
+          65
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9049495058460971,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "or-auth-vi",
+      "group_id": "or-auth",
+      "category": "logic",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn chính sách cho phép đăng nhập khi có passkey HOẶC có đồng thời mật khẩu và OTP.",
+      "candidate_ids": [
+        "or-auth-d5",
+        "or-auth-d2",
+        "or-auth-d4",
+        "or-auth-d1",
+        "or-auth-d3",
+        "or-auth-d0"
+      ],
+      "ranking": [
+        "or-auth-d5",
+        "or-auth-d3",
+        "or-auth-d1",
+        "or-auth-d0",
+        "or-auth-d4",
+        "or-auth-d2"
+      ],
+      "scores": {
+        "or-auth-d5": 1.3678721189498901,
+        "or-auth-d2": -3.4506142139434814,
+        "or-auth-d4": -2.5717992782592773,
+        "or-auth-d1": -0.08134926855564117,
+        "or-auth-d3": 1.2053622007369995,
+        "or-auth-d0": -1.0691922903060913
+      },
+      "latency_seconds": 2.008445400002529,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          58,
+          45,
+          45,
+          42,
+          44
+        ],
+        "retained_lengths": [
+          42,
+          58,
+          45,
+          45,
+          42,
+          44
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.19073015752286024,
+        "mrr5": 0.2,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.0,
+        "hard_negative_win": 0.0
+      }
+    },
+    {
+      "id": "or-auth-en",
+      "group_id": "or-auth",
+      "category": "logic",
+      "language": "en",
+      "track": "core",
+      "query": "Select a policy allowing login with a passkey OR with both a password and an OTP.",
+      "candidate_ids": [
+        "or-auth-d4",
+        "or-auth-d0",
+        "or-auth-d1",
+        "or-auth-d5",
+        "or-auth-d2",
+        "or-auth-d3"
+      ],
+      "ranking": [
+        "or-auth-d5",
+        "or-auth-d3",
+        "or-auth-d1",
+        "or-auth-d0",
+        "or-auth-d2",
+        "or-auth-d4"
+      ],
+      "scores": {
+        "or-auth-d4": -1.8076549768447876,
+        "or-auth-d0": -0.6557844877243042,
+        "or-auth-d1": 0.5618690848350525,
+        "or-auth-d5": 3.795701742172241,
+        "or-auth-d2": -1.5765788555145264,
+        "or-auth-d3": 2.6602694988250732
+      },
+      "latency_seconds": 1.953125200001523,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          41,
+          42,
+          39,
+          55,
+          39
+        ],
+        "retained_lengths": [
+          42,
+          41,
+          42,
+          39,
+          55,
+          39
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.35547474893089503,
+        "mrr5": 0.2,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.0,
+        "hard_negative_win": 0.0
+      }
+    },
+    {
+      "id": "numeric-p95-vi",
+      "group_id": "numeric-p95",
+      "category": "numeric",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm kết quả đo chứng minh p95 latency dưới 200 ms ở tải ít nhất 1000 request/giây.",
+      "candidate_ids": [
+        "numeric-p95-d5",
+        "numeric-p95-d2",
+        "numeric-p95-d4",
+        "numeric-p95-d3",
+        "numeric-p95-d0",
+        "numeric-p95-d1"
+      ],
+      "ranking": [
+        "numeric-p95-d3",
+        "numeric-p95-d1",
+        "numeric-p95-d2",
+        "numeric-p95-d0",
+        "numeric-p95-d4",
+        "numeric-p95-d5"
+      ],
+      "scores": {
+        "numeric-p95-d5": -3.8673315048217773,
+        "numeric-p95-d2": -0.1445615142583847,
+        "numeric-p95-d4": -2.958979845046997,
+        "numeric-p95-d3": 2.364809513092041,
+        "numeric-p95-d0": -1.2721529006958008,
+        "numeric-p95-d1": 0.5095997452735901
+      },
+      "latency_seconds": 2.1230710000018007,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          41,
+          44,
+          43,
+          67,
+          48,
+          53
+        ],
+        "retained_lengths": [
+          41,
+          44,
+          43,
+          67,
+          48,
+          53
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.882808018370203,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "numeric-p95-en",
+      "group_id": "numeric-p95",
+      "category": "numeric",
+      "language": "en",
+      "track": "core",
+      "query": "Find a measurement demonstrating p95 latency below 200 ms at a load of at least 1000 requests per second.",
+      "candidate_ids": [
+        "numeric-p95-d2",
+        "numeric-p95-d0",
+        "numeric-p95-d3",
+        "numeric-p95-d5",
+        "numeric-p95-d4",
+        "numeric-p95-d1"
+      ],
+      "ranking": [
+        "numeric-p95-d3",
+        "numeric-p95-d1",
+        "numeric-p95-d2",
+        "numeric-p95-d0",
+        "numeric-p95-d4",
+        "numeric-p95-d5"
+      ],
+      "scores": {
+        "numeric-p95-d2": -0.29348990321159363,
+        "numeric-p95-d0": -0.8147339820861816,
+        "numeric-p95-d3": 1.2585797309875488,
+        "numeric-p95-d5": -4.185708999633789,
+        "numeric-p95-d4": -2.9957897663116455,
+        "numeric-p95-d1": 0.8886364698410034
+      },
+      "latency_seconds": 2.2171841000017594,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          45,
+          49,
+          68,
+          42,
+          44,
+          54
+        ],
+        "retained_lengths": [
+          45,
+          49,
+          68,
+          42,
+          44,
+          54
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.882808018370203,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "numeric-units-vi",
+      "group_id": "numeric-units",
+      "category": "numeric",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm link truyền có goodput ít nhất 10 MB/s; quy ước 1 byte = 8 bit và MB là đơn vị thập phân.",
+      "candidate_ids": [
+        "numeric-units-d0",
+        "numeric-units-d2",
+        "numeric-units-d5",
+        "numeric-units-d1",
+        "numeric-units-d3",
+        "numeric-units-d4"
+      ],
+      "ranking": [
+        "numeric-units-d0",
+        "numeric-units-d2",
+        "numeric-units-d1",
+        "numeric-units-d3",
+        "numeric-units-d5",
+        "numeric-units-d4"
+      ],
+      "scores": {
+        "numeric-units-d0": 2.4051284790039062,
+        "numeric-units-d2": 2.2764928340911865,
+        "numeric-units-d5": -0.8085116147994995,
+        "numeric-units-d1": 0.367097944021225,
+        "numeric-units-d3": -0.724160373210907,
+        "numeric-units-d4": -1.010901689529419
+      },
+      "latency_seconds": 2.398543899995275,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          48,
+          56,
+          62,
+          45,
+          56,
+          49
+        ],
+        "retained_lengths": [
+          48,
+          56,
+          62,
+          45,
+          56,
+          49
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.47909084298136606,
+        "mrr5": 0.25,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.0,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "numeric-units-en",
+      "group_id": "numeric-units",
+      "category": "numeric",
+      "language": "en",
+      "track": "core",
+      "query": "Find a link with goodput of at least 10 MB/s; use 8 bits per byte and decimal MB.",
+      "candidate_ids": [
+        "numeric-units-d2",
+        "numeric-units-d4",
+        "numeric-units-d0",
+        "numeric-units-d1",
+        "numeric-units-d5",
+        "numeric-units-d3"
+      ],
+      "ranking": [
+        "numeric-units-d0",
+        "numeric-units-d1",
+        "numeric-units-d2",
+        "numeric-units-d5",
+        "numeric-units-d4",
+        "numeric-units-d3"
+      ],
+      "scores": {
+        "numeric-units-d2": 1.0266972780227661,
+        "numeric-units-d4": -2.548412799835205,
+        "numeric-units-d0": 1.777738332748413,
+        "numeric-units-d1": 1.7129263877868652,
+        "numeric-units-d5": -1.1377768516540527,
+        "numeric-units-d3": -3.111792802810669
+      },
+      "latency_seconds": 2.3100083000026643,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          52,
+          45,
+          44,
+          41,
+          58,
+          52
+        ],
+        "retained_lengths": [
+          52,
+          45,
+          44,
+          41,
+          58,
+          52
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.3881345103028465,
+        "mrr5": 0.25,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.0,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "temporal-policy-vi",
+      "group_id": "temporal-policy",
+      "category": "temporal",
+      "language": "vi",
+      "track": "core",
+      "query": "Tại ngày 2026-04-15, tìm chính sách đang có hiệu lực cho phép hoàn tiền trong 14 ngày.",
+      "candidate_ids": [
+        "temporal-policy-d3",
+        "temporal-policy-d5",
+        "temporal-policy-d0",
+        "temporal-policy-d4",
+        "temporal-policy-d2",
+        "temporal-policy-d1"
+      ],
+      "ranking": [
+        "temporal-policy-d1",
+        "temporal-policy-d0",
+        "temporal-policy-d3",
+        "temporal-policy-d2",
+        "temporal-policy-d5",
+        "temporal-policy-d4"
+      ],
+      "scores": {
+        "temporal-policy-d3": 2.618356943130493,
+        "temporal-policy-d5": 0.9843518733978271,
+        "temporal-policy-d0": 3.2942757606506348,
+        "temporal-policy-d4": -6.484644889831543,
+        "temporal-policy-d2": 1.6461683511734009,
+        "temporal-policy-d1": 3.6947503089904785
+      },
+      "latency_seconds": 2.0810314000045764,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          45,
+          45,
+          41,
+          38,
+          45,
+          54
+        ],
+        "retained_lengths": [
+          45,
+          45,
+          41,
+          38,
+          45,
+          54
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9049495058460971,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "temporal-policy-en",
+      "group_id": "temporal-policy",
+      "category": "temporal",
+      "language": "en",
+      "track": "core",
+      "query": "As of 2026-04-15, find an effective policy allowing refunds within 14 days.",
+      "candidate_ids": [
+        "temporal-policy-d3",
+        "temporal-policy-d0",
+        "temporal-policy-d4",
+        "temporal-policy-d5",
+        "temporal-policy-d2",
+        "temporal-policy-d1"
+      ],
+      "ranking": [
+        "temporal-policy-d3",
+        "temporal-policy-d1",
+        "temporal-policy-d0",
+        "temporal-policy-d2",
+        "temporal-policy-d5",
+        "temporal-policy-d4"
+      ],
+      "scores": {
+        "temporal-policy-d3": 4.791016578674316,
+        "temporal-policy-d0": 3.529517650604248,
+        "temporal-policy-d4": -3.8453540802001953,
+        "temporal-policy-d5": -0.6900009512901306,
+        "temporal-policy-d2": 2.268327236175537,
+        "temporal-policy-d1": 4.640505790710449
+      },
+      "latency_seconds": 2.0481795000014245,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          38,
+          35,
+          42,
+          42,
+          51
+        ],
+        "retained_lengths": [
+          42,
+          38,
+          35,
+          42,
+          42,
+          51
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7895959410076381,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "temporal-order-vi",
+      "group_id": "temporal-order",
+      "category": "temporal",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm quy trình chỉ gửi email xác nhận sau khi giao dịch thanh toán đã commit thành công.",
+      "candidate_ids": [
+        "temporal-order-d4",
+        "temporal-order-d0",
+        "temporal-order-d3",
+        "temporal-order-d2",
+        "temporal-order-d5",
+        "temporal-order-d1"
+      ],
+      "ranking": [
+        "temporal-order-d5",
+        "temporal-order-d0",
+        "temporal-order-d4",
+        "temporal-order-d1",
+        "temporal-order-d2",
+        "temporal-order-d3"
+      ],
+      "scores": {
+        "temporal-order-d4": -1.0328896045684814,
+        "temporal-order-d0": -0.97236567735672,
+        "temporal-order-d3": -5.367928504943848,
+        "temporal-order-d2": -3.9087436199188232,
+        "temporal-order-d5": 0.07585179805755615,
+        "temporal-order-d1": -2.2531991004943848
+      },
+      "latency_seconds": 2.062092500003928,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          40,
+          39,
+          40,
+          40,
+          56,
+          48
+        ],
+        "retained_lengths": [
+          40,
+          39,
+          40,
+          40,
+          56,
+          48
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.882808018370203,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "temporal-order-en",
+      "group_id": "temporal-order",
+      "category": "temporal",
+      "language": "en",
+      "track": "core",
+      "query": "Find a workflow that sends confirmation email only after the payment transaction has committed successfully.",
+      "candidate_ids": [
+        "temporal-order-d4",
+        "temporal-order-d5",
+        "temporal-order-d2",
+        "temporal-order-d1",
+        "temporal-order-d0",
+        "temporal-order-d3"
+      ],
+      "ranking": [
+        "temporal-order-d5",
+        "temporal-order-d4",
+        "temporal-order-d1",
+        "temporal-order-d0",
+        "temporal-order-d2",
+        "temporal-order-d3"
+      ],
+      "scores": {
+        "temporal-order-d4": -0.9942483901977539,
+        "temporal-order-d5": 2.020311117172241,
+        "temporal-order-d2": -4.3774094581604,
+        "temporal-order-d1": -1.334659218788147,
+        "temporal-order-d0": -1.626737356185913,
+        "temporal-order-d3": -5.5562944412231445
+      },
+      "latency_seconds": 1.9702525999964564,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          38,
+          54,
+          38,
+          46,
+          37,
+          38
+        ],
+        "retained_lengths": [
+          38,
+          54,
+          38,
+          46,
+          37,
+          38
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9049495058460971,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "causal-random-vi",
+      "group_id": "causal-random",
+      "category": "causal",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm bằng chứng thực nghiệm rằng bật cache gây giảm latency, với cùng tải và phần cứng.",
+      "candidate_ids": [
+        "causal-random-d0",
+        "causal-random-d5",
+        "causal-random-d2",
+        "causal-random-d4",
+        "causal-random-d1",
+        "causal-random-d3"
+      ],
+      "ranking": [
+        "causal-random-d3",
+        "causal-random-d0",
+        "causal-random-d4",
+        "causal-random-d5",
+        "causal-random-d2",
+        "causal-random-d1"
+      ],
+      "scores": {
+        "causal-random-d0": 1.3537733554840088,
+        "causal-random-d5": -2.355313777923584,
+        "causal-random-d2": -4.5339250564575195,
+        "causal-random-d4": 0.9079675674438477,
+        "causal-random-d1": -5.268927574157715,
+        "causal-random-d3": 1.4232754707336426
+      },
+      "latency_seconds": 2.0694147999965935,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          48,
+          51,
+          42,
+          44,
+          34,
+          65
+        ],
+        "retained_lengths": [
+          48,
+          51,
+          42,
+          44,
+          34,
+          65
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9049495058460971,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "causal-random-en",
+      "group_id": "causal-random",
+      "category": "causal",
+      "language": "en",
+      "track": "core",
+      "query": "Find experimental evidence that enabling cache causes lower latency with load and hardware held constant.",
+      "candidate_ids": [
+        "causal-random-d2",
+        "causal-random-d0",
+        "causal-random-d1",
+        "causal-random-d4",
+        "causal-random-d5",
+        "causal-random-d3"
+      ],
+      "ranking": [
+        "causal-random-d3",
+        "causal-random-d4",
+        "causal-random-d0",
+        "causal-random-d5",
+        "causal-random-d1",
+        "causal-random-d2"
+      ],
+      "scores": {
+        "causal-random-d2": -4.718204975128174,
+        "causal-random-d0": 1.1566532850265503,
+        "causal-random-d1": -2.188291311264038,
+        "causal-random-d4": 2.0836868286132812,
+        "causal-random-d5": -1.8359613418579102,
+        "causal-random-d3": 2.24460768699646
+      },
+      "latency_seconds": 1.5192996999976458,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          40,
+          46,
+          32,
+          42,
+          49,
+          63
+        ],
+        "retained_lengths": [
+          40,
+          46,
+          32,
+          42,
+          49,
+          63
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9879538239787087,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "causal-incident-vi",
+      "group_id": "causal-incident",
+      "category": "causal",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm báo cáo chứng minh cạn connection pool là nguyên nhân timeout, bằng tái hiện và can thiệp.",
+      "candidate_ids": [
+        "causal-incident-d5",
+        "causal-incident-d1",
+        "causal-incident-d2",
+        "causal-incident-d3",
+        "causal-incident-d4",
+        "causal-incident-d0"
+      ],
+      "ranking": [
+        "causal-incident-d1",
+        "causal-incident-d5",
+        "causal-incident-d2",
+        "causal-incident-d0",
+        "causal-incident-d3",
+        "causal-incident-d4"
+      ],
+      "scores": {
+        "causal-incident-d5": -1.8052045106887817,
+        "causal-incident-d1": -0.11617626249790192,
+        "causal-incident-d2": -3.1003684997558594,
+        "causal-incident-d3": -4.523508548736572,
+        "causal-incident-d4": -6.08849573135376,
+        "causal-incident-d0": -3.3792061805725098
+      },
+      "latency_seconds": 1.0995987999995123,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          56,
+          75,
+          37,
+          46,
+          48,
+          51
+        ],
+        "retained_lengths": [
+          56,
+          75,
+          37,
+          46,
+          48,
+          51
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9220433016555235,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "causal-incident-en",
+      "group_id": "causal-incident",
+      "category": "causal",
+      "language": "en",
+      "track": "core",
+      "query": "Find a report establishing connection-pool exhaustion as the cause of timeouts through reproduction and intervention.",
+      "candidate_ids": [
+        "causal-incident-d0",
+        "causal-incident-d1",
+        "causal-incident-d2",
+        "causal-incident-d5",
+        "causal-incident-d4",
+        "causal-incident-d3"
+      ],
+      "ranking": [
+        "causal-incident-d1",
+        "causal-incident-d5",
+        "causal-incident-d0",
+        "causal-incident-d2",
+        "causal-incident-d3",
+        "causal-incident-d4"
+      ],
+      "scores": {
+        "causal-incident-d0": -3.30214786529541,
+        "causal-incident-d1": 0.4216161370277405,
+        "causal-incident-d2": -4.793296813964844,
+        "causal-incident-d5": -2.375852584838867,
+        "causal-incident-d4": -6.50813627243042,
+        "causal-incident-d3": -5.296092987060547
+      },
+      "latency_seconds": 1.6904880999936722,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          50,
+          74,
+          36,
+          55,
+          47,
+          45
+        ],
+        "retained_lengths": [
+          50,
+          74,
+          36,
+          55,
+          47,
+          45
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9146628058302255,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "multihop-region-vi",
+      "group_id": "multihop-region",
+      "category": "multihop",
+      "language": "vi",
+      "track": "core",
+      "query": "Theo các ánh xạ trong tài liệu, chọn dịch vụ xử lý dữ liệu tại EU: dịch vụ -> cluster -> vùng.",
+      "candidate_ids": [
+        "multihop-region-d1",
+        "multihop-region-d5",
+        "multihop-region-d4",
+        "multihop-region-d3",
+        "multihop-region-d2",
+        "multihop-region-d0"
+      ],
+      "ranking": [
+        "multihop-region-d4",
+        "multihop-region-d0",
+        "multihop-region-d3",
+        "multihop-region-d5",
+        "multihop-region-d2",
+        "multihop-region-d1"
+      ],
+      "scores": {
+        "multihop-region-d1": -7.946779727935791,
+        "multihop-region-d5": -6.203510761260986,
+        "multihop-region-d4": -2.6100311279296875,
+        "multihop-region-d3": -5.244420528411865,
+        "multihop-region-d2": -6.951608180999756,
+        "multihop-region-d0": -4.136999130249023
+      },
+      "latency_seconds": 2.645410700002685,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          46,
+          63,
+          64,
+          47,
+          50,
+          54
+        ],
+        "retained_lengths": [
+          46,
+          63,
+          64,
+          47,
+          50,
+          54
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9220433016555235,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "multihop-region-en",
+      "group_id": "multihop-region",
+      "category": "multihop",
+      "language": "en",
+      "track": "core",
+      "query": "Using the document's mappings, select a service processing data in the EU: service -> cluster -> region.",
+      "candidate_ids": [
+        "multihop-region-d3",
+        "multihop-region-d5",
+        "multihop-region-d2",
+        "multihop-region-d1",
+        "multihop-region-d0",
+        "multihop-region-d4"
+      ],
+      "ranking": [
+        "multihop-region-d4",
+        "multihop-region-d0",
+        "multihop-region-d3",
+        "multihop-region-d5",
+        "multihop-region-d2",
+        "multihop-region-d1"
+      ],
+      "scores": {
+        "multihop-region-d3": -4.698582172393799,
+        "multihop-region-d5": -6.453556060791016,
+        "multihop-region-d2": -6.859712600708008,
+        "multihop-region-d1": -8.965963363647461,
+        "multihop-region-d0": -4.4208784103393555,
+        "multihop-region-d4": -2.0143935680389404
+      },
+      "latency_seconds": 2.6329943999953684,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          47,
+          63,
+          50,
+          46,
+          54,
+          64
+        ],
+        "retained_lengths": [
+          47,
+          63,
+          50,
+          46,
+          54,
+          64
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9220433016555235,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "multihop-permission-vi",
+      "group_id": "multihop-permission",
+      "category": "multihop",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm bằng chứng Lan được đọc ledger nhờ quan hệ user -> group -> role -> permission.",
+      "candidate_ids": [
+        "multihop-permission-d1",
+        "multihop-permission-d2",
+        "multihop-permission-d4",
+        "multihop-permission-d0",
+        "multihop-permission-d3",
+        "multihop-permission-d5"
+      ],
+      "ranking": [
+        "multihop-permission-d2",
+        "multihop-permission-d0",
+        "multihop-permission-d4",
+        "multihop-permission-d1",
+        "multihop-permission-d5",
+        "multihop-permission-d3"
+      ],
+      "scores": {
+        "multihop-permission-d1": -0.5778075456619263,
+        "multihop-permission-d2": 1.4057703018188477,
+        "multihop-permission-d4": 0.6851456165313721,
+        "multihop-permission-d0": 0.8351173400878906,
+        "multihop-permission-d3": -2.126826524734497,
+        "multihop-permission-d5": -1.7776023149490356
+      },
+      "latency_seconds": 2.472401400002127,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          49,
+          61,
+          61,
+          49,
+          36,
+          46
+        ],
+        "retained_lengths": [
+          49,
+          61,
+          61,
+          49,
+          36,
+          46
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.8688109777822237,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "multihop-permission-en",
+      "group_id": "multihop-permission",
+      "category": "multihop",
+      "language": "en",
+      "track": "core",
+      "query": "Find evidence that Lan can read the ledger via user -> group -> role -> permission mappings.",
+      "candidate_ids": [
+        "multihop-permission-d1",
+        "multihop-permission-d4",
+        "multihop-permission-d5",
+        "multihop-permission-d0",
+        "multihop-permission-d3",
+        "multihop-permission-d2"
+      ],
+      "ranking": [
+        "multihop-permission-d2",
+        "multihop-permission-d4",
+        "multihop-permission-d0",
+        "multihop-permission-d1",
+        "multihop-permission-d3",
+        "multihop-permission-d5"
+      ],
+      "scores": {
+        "multihop-permission-d1": -0.7243342995643616,
+        "multihop-permission-d4": 0.38049226999282837,
+        "multihop-permission-d5": -3.2863004207611084,
+        "multihop-permission-d0": -0.1304824948310852,
+        "multihop-permission-d3": -1.6302261352539062,
+        "multihop-permission-d2": 1.508376955986023
+      },
+      "latency_seconds": 2.561300900000788,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          50,
+          62,
+          47,
+          50,
+          37,
+          62
+        ],
+        "retained_lengths": [
+          50,
+          62,
+          47,
+          50,
+          37,
+          62
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7864386820782063,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "code-boundary-vi",
+      "group_id": "code-boundary",
+      "category": "code",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn hàm Python trả True đúng khi 18 <= age < 65, kể cả hai giá trị biên 18 và 65.",
+      "candidate_ids": [
+        "code-boundary-d5",
+        "code-boundary-d4",
+        "code-boundary-d3",
+        "code-boundary-d0",
+        "code-boundary-d2",
+        "code-boundary-d1"
+      ],
+      "ranking": [
+        "code-boundary-d1",
+        "code-boundary-d3",
+        "code-boundary-d4",
+        "code-boundary-d5",
+        "code-boundary-d0",
+        "code-boundary-d2"
+      ],
+      "scores": {
+        "code-boundary-d5": 2.509122848510742,
+        "code-boundary-d4": 3.1039557456970215,
+        "code-boundary-d3": 3.319282293319702,
+        "code-boundary-d0": 0.43583768606185913,
+        "code-boundary-d2": -1.5069506168365479,
+        "code-boundary-d1": 3.3812928199768066
+      },
+      "latency_seconds": 2.047810700001719,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          41,
+          43,
+          41,
+          43,
+          49,
+          41
+        ],
+        "retained_lengths": [
+          41,
+          43,
+          41,
+          43,
+          49,
+          41
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7911043622741993,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "code-boundary-en",
+      "group_id": "code-boundary",
+      "category": "code",
+      "language": "en",
+      "track": "core",
+      "query": "Select Python code returning True exactly when 18 <= age < 65, including correct treatment of ages 18 and 65.",
+      "candidate_ids": [
+        "code-boundary-d5",
+        "code-boundary-d1",
+        "code-boundary-d3",
+        "code-boundary-d2",
+        "code-boundary-d0",
+        "code-boundary-d4"
+      ],
+      "ranking": [
+        "code-boundary-d1",
+        "code-boundary-d3",
+        "code-boundary-d4",
+        "code-boundary-d5",
+        "code-boundary-d2",
+        "code-boundary-d0"
+      ],
+      "scores": {
+        "code-boundary-d5": 2.6680328845977783,
+        "code-boundary-d1": 4.29393196105957,
+        "code-boundary-d3": 4.239345550537109,
+        "code-boundary-d2": -1.019058346748352,
+        "code-boundary-d0": -1.6757326126098633,
+        "code-boundary-d4": 3.6238975524902344
+      },
+      "latency_seconds": 2.1791144000017084,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          42,
+          42,
+          50,
+          44,
+          44
+        ],
+        "retained_lengths": [
+          42,
+          42,
+          42,
+          50,
+          44,
+          44
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9146628058302255,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "code-idempotent-vi",
+      "group_id": "code-idempotent",
+      "category": "code",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn xử lý webhook đảm bảo cùng event_id không tăng số dư hai lần, kể cả hai request đồng thời.",
+      "candidate_ids": [
+        "code-idempotent-d5",
+        "code-idempotent-d3",
+        "code-idempotent-d2",
+        "code-idempotent-d4",
+        "code-idempotent-d1",
+        "code-idempotent-d0"
+      ],
+      "ranking": [
+        "code-idempotent-d0",
+        "code-idempotent-d4",
+        "code-idempotent-d2",
+        "code-idempotent-d5",
+        "code-idempotent-d3",
+        "code-idempotent-d1"
+      ],
+      "scores": {
+        "code-idempotent-d5": -2.0178003311157227,
+        "code-idempotent-d3": -2.2175817489624023,
+        "code-idempotent-d2": -1.6238124370574951,
+        "code-idempotent-d4": -1.4306867122650146,
+        "code-idempotent-d1": -6.89013671875,
+        "code-idempotent-d0": 0.8526487350463867
+      },
+      "latency_seconds": 2.6648609999974724,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          58,
+          49,
+          54,
+          68,
+          60,
+          43
+        ],
+        "retained_lengths": [
+          58,
+          49,
+          54,
+          68,
+          60,
+          43
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.5766666455144387,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "code-idempotent-en",
+      "group_id": "code-idempotent",
+      "category": "code",
+      "language": "en",
+      "track": "core",
+      "query": "Select webhook handling ensuring the same event_id cannot increment a balance twice, even under concurrent requests.",
+      "candidate_ids": [
+        "code-idempotent-d2",
+        "code-idempotent-d3",
+        "code-idempotent-d1",
+        "code-idempotent-d5",
+        "code-idempotent-d0",
+        "code-idempotent-d4"
+      ],
+      "ranking": [
+        "code-idempotent-d0",
+        "code-idempotent-d4",
+        "code-idempotent-d5",
+        "code-idempotent-d2",
+        "code-idempotent-d3",
+        "code-idempotent-d1"
+      ],
+      "scores": {
+        "code-idempotent-d2": -1.1304489374160767,
+        "code-idempotent-d3": -1.8556764125823975,
+        "code-idempotent-d1": -5.573455810546875,
+        "code-idempotent-d5": -0.7849259972572327,
+        "code-idempotent-d0": 1.904924988746643,
+        "code-idempotent-d4": -0.5983524322509766
+      },
+      "latency_seconds": 2.7114694000047166,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          54,
+          49,
+          60,
+          58,
+          43,
+          68
+        ],
+        "retained_lengths": [
+          54,
+          49,
+          60,
+          58,
+          43,
+          68
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.5766666455144387,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "entity-owner-vi",
+      "group_id": "entity-owner",
+      "category": "entity",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm chủ sở hữu service Mercury thuộc dự án Atlas, không phải dự án Orion.",
+      "candidate_ids": [
+        "entity-owner-d5",
+        "entity-owner-d1",
+        "entity-owner-d0",
+        "entity-owner-d3",
+        "entity-owner-d2",
+        "entity-owner-d4"
+      ],
+      "ranking": [
+        "entity-owner-d5",
+        "entity-owner-d3",
+        "entity-owner-d4",
+        "entity-owner-d0",
+        "entity-owner-d1",
+        "entity-owner-d2"
+      ],
+      "scores": {
+        "entity-owner-d5": 3.9636919498443604,
+        "entity-owner-d1": -2.4560461044311523,
+        "entity-owner-d0": -0.5746949911117554,
+        "entity-owner-d3": 1.6411118507385254,
+        "entity-owner-d2": -4.416477680206299,
+        "entity-owner-d4": 0.9270308017730713
+      },
+      "latency_seconds": 2.013334000002942,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          46,
+          34,
+          47,
+          44,
+          35,
+          50
+        ],
+        "retained_lengths": [
+          46,
+          34,
+          47,
+          44,
+          35,
+          50
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9239941662222116,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "entity-owner-en",
+      "group_id": "entity-owner",
+      "category": "entity",
+      "language": "en",
+      "track": "core",
+      "query": "Find the owner of the Mercury service in project Atlas, excluding project Orion.",
+      "candidate_ids": [
+        "entity-owner-d3",
+        "entity-owner-d2",
+        "entity-owner-d1",
+        "entity-owner-d5",
+        "entity-owner-d4",
+        "entity-owner-d0"
+      ],
+      "ranking": [
+        "entity-owner-d3",
+        "entity-owner-d5",
+        "entity-owner-d4",
+        "entity-owner-d1",
+        "entity-owner-d0",
+        "entity-owner-d2"
+      ],
+      "scores": {
+        "entity-owner-d3": 4.215500354766846,
+        "entity-owner-d2": -2.511967182159424,
+        "entity-owner-d1": 0.6514350175857544,
+        "entity-owner-d5": 3.7263641357421875,
+        "entity-owner-d4": 2.881645679473877,
+        "entity-owner-d0": 0.5503023862838745
+      },
+      "latency_seconds": 1.9280306000000564,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          33,
+          32,
+          44,
+          48,
+          45
+        ],
+        "retained_lengths": [
+          42,
+          33,
+          32,
+          44,
+          48,
+          45
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.6396122693718669,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "entity-version-vi",
+      "group_id": "entity-version",
+      "category": "entity",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn hướng dẫn API v2 dùng cursor pagination; loại hướng dẫn v1 dùng offset.",
+      "candidate_ids": [
+        "entity-version-d1",
+        "entity-version-d2",
+        "entity-version-d5",
+        "entity-version-d3",
+        "entity-version-d0",
+        "entity-version-d4"
+      ],
+      "ranking": [
+        "entity-version-d5",
+        "entity-version-d0",
+        "entity-version-d4",
+        "entity-version-d2",
+        "entity-version-d1",
+        "entity-version-d3"
+      ],
+      "scores": {
+        "entity-version-d1": -4.428704738616943,
+        "entity-version-d2": -4.3177008628845215,
+        "entity-version-d5": 2.152221202850342,
+        "entity-version-d3": -5.372796535491943,
+        "entity-version-d0": -0.5991597175598145,
+        "entity-version-d4": -1.5757582187652588
+      },
+      "latency_seconds": 2.3599347000053967,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          36,
+          55,
+          64,
+          44,
+          54,
+          51
+        ],
+        "retained_lengths": [
+          36,
+          55,
+          64,
+          44,
+          54,
+          51
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9239941662222116,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "entity-version-en",
+      "group_id": "entity-version",
+      "category": "entity",
+      "language": "en",
+      "track": "core",
+      "query": "Select API v2 documentation using cursor pagination; exclude API v1 offset pagination.",
+      "candidate_ids": [
+        "entity-version-d2",
+        "entity-version-d4",
+        "entity-version-d0",
+        "entity-version-d3",
+        "entity-version-d5",
+        "entity-version-d1"
+      ],
+      "ranking": [
+        "entity-version-d5",
+        "entity-version-d0",
+        "entity-version-d1",
+        "entity-version-d4",
+        "entity-version-d2",
+        "entity-version-d3"
+      ],
+      "scores": {
+        "entity-version-d2": -4.117888927459717,
+        "entity-version-d4": -3.3009438514709473,
+        "entity-version-d0": -1.5002539157867432,
+        "entity-version-d3": -5.621570110321045,
+        "entity-version-d5": 2.531120777130127,
+        "entity-version-d1": -3.191412925720215
+      },
+      "latency_seconds": 2.406828900006076,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          55,
+          51,
+          54,
+          44,
+          64,
+          36
+        ],
+        "retained_lengths": [
+          55,
+          51,
+          54,
+          44,
+          64,
+          36
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9220433016555235,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "crosslingual-delete-vi",
+      "group_id": "crosslingual-delete",
+      "category": "crosslingual",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm chính sách xóa tài khoản đồng thời hủy khóa mã hóa riêng để bản sao lưu cũ không thể giải mã.",
+      "candidate_ids": [
+        "crosslingual-delete-d5",
+        "crosslingual-delete-d0",
+        "crosslingual-delete-d2",
+        "crosslingual-delete-d3",
+        "crosslingual-delete-d1",
+        "crosslingual-delete-d4"
+      ],
+      "ranking": [
+        "crosslingual-delete-d5",
+        "crosslingual-delete-d3",
+        "crosslingual-delete-d4",
+        "crosslingual-delete-d0",
+        "crosslingual-delete-d2",
+        "crosslingual-delete-d1"
+      ],
+      "scores": {
+        "crosslingual-delete-d5": 1.0102155208587646,
+        "crosslingual-delete-d0": -4.116164207458496,
+        "crosslingual-delete-d2": -4.181946754455566,
+        "crosslingual-delete-d3": 0.6286795139312744,
+        "crosslingual-delete-d1": -5.342298984527588,
+        "crosslingual-delete-d4": -0.2710340619087219
+      },
+      "latency_seconds": 2.5272140000015497,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          51,
+          55,
+          53,
+          40,
+          48,
+          65
+        ],
+        "retained_lengths": [
+          51,
+          55,
+          53,
+          40,
+          48,
+          65
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7591919243197319,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "crosslingual-delete-en",
+      "group_id": "crosslingual-delete",
+      "category": "crosslingual",
+      "language": "en",
+      "track": "core",
+      "query": "Find an account deletion policy that also destroys its individual encryption key so old backups become undecryptable.",
+      "candidate_ids": [
+        "crosslingual-delete-d2",
+        "crosslingual-delete-d4",
+        "crosslingual-delete-d0",
+        "crosslingual-delete-d1",
+        "crosslingual-delete-d5",
+        "crosslingual-delete-d3"
+      ],
+      "ranking": [
+        "crosslingual-delete-d3",
+        "crosslingual-delete-d4",
+        "crosslingual-delete-d5",
+        "crosslingual-delete-d2",
+        "crosslingual-delete-d0",
+        "crosslingual-delete-d1"
+      ],
+      "scores": {
+        "crosslingual-delete-d2": -5.367342472076416,
+        "crosslingual-delete-d4": -0.1546657383441925,
+        "crosslingual-delete-d0": -5.99722957611084,
+        "crosslingual-delete-d1": -6.569464206695557,
+        "crosslingual-delete-d5": -1.8093976974487305,
+        "crosslingual-delete-d3": 2.0761499404907227
+      },
+      "latency_seconds": 2.6261656999995466,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          54,
+          66,
+          56,
+          49,
+          52,
+          41
+        ],
+        "retained_lengths": [
+          54,
+          66,
+          56,
+          49,
+          52,
+          41
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7363636171343382,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "crosslingual-retry-vi",
+      "group_id": "crosslingual-retry",
+      "category": "crosslingual",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm client tôn trọng Retry-After khi gặp HTTP 429, có backoff và jitter.",
+      "candidate_ids": [
+        "crosslingual-retry-d2",
+        "crosslingual-retry-d5",
+        "crosslingual-retry-d3",
+        "crosslingual-retry-d4",
+        "crosslingual-retry-d0",
+        "crosslingual-retry-d1"
+      ],
+      "ranking": [
+        "crosslingual-retry-d3",
+        "crosslingual-retry-d1",
+        "crosslingual-retry-d5",
+        "crosslingual-retry-d2",
+        "crosslingual-retry-d4",
+        "crosslingual-retry-d0"
+      ],
+      "scores": {
+        "crosslingual-retry-d2": -0.6679457426071167,
+        "crosslingual-retry-d5": -0.5221326351165771,
+        "crosslingual-retry-d3": 3.3456509113311768,
+        "crosslingual-retry-d4": -2.436112880706787,
+        "crosslingual-retry-d0": -6.724238395690918,
+        "crosslingual-retry-d1": 0.2197483479976654
+      },
+      "latency_seconds": 2.5044974999982514,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          42,
+          51,
+          66,
+          49,
+          51,
+          49
+        ],
+        "retained_lengths": [
+          42,
+          51,
+          66,
+          49,
+          51,
+          49
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9508013338940989,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "crosslingual-retry-en",
+      "group_id": "crosslingual-retry",
+      "category": "crosslingual",
+      "language": "en",
+      "track": "core",
+      "query": "Find a client respecting Retry-After on HTTP 429 and using backoff with jitter.",
+      "candidate_ids": [
+        "crosslingual-retry-d0",
+        "crosslingual-retry-d3",
+        "crosslingual-retry-d4",
+        "crosslingual-retry-d1",
+        "crosslingual-retry-d2",
+        "crosslingual-retry-d5"
+      ],
+      "ranking": [
+        "crosslingual-retry-d3",
+        "crosslingual-retry-d1",
+        "crosslingual-retry-d5",
+        "crosslingual-retry-d2",
+        "crosslingual-retry-d4",
+        "crosslingual-retry-d0"
+      ],
+      "scores": {
+        "crosslingual-retry-d0": -7.123437881469727,
+        "crosslingual-retry-d3": 3.402695417404175,
+        "crosslingual-retry-d4": -4.962279319763184,
+        "crosslingual-retry-d1": 0.4301711916923523,
+        "crosslingual-retry-d2": -1.5911636352539062,
+        "crosslingual-retry-d5": -1.2672933340072632
+      },
+      "latency_seconds": 2.4131452000001445,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          50,
+          65,
+          48,
+          48,
+          41,
+          50
+        ],
+        "retained_lengths": [
+          50,
+          65,
+          48,
+          48,
+          41,
+          50
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9508013338940989,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "injection-cache-vi",
+      "group_id": "injection-cache",
+      "category": "injection",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm bằng chứng cache bị vô hiệu hóa ngay sau khi cập nhật giá, không chỉ hết hạn TTL.",
+      "candidate_ids": [
+        "injection-cache-d2",
+        "injection-cache-d4",
+        "injection-cache-d3",
+        "injection-cache-d0",
+        "injection-cache-d1",
+        "injection-cache-d5"
+      ],
+      "ranking": [
+        "injection-cache-d0",
+        "injection-cache-d5",
+        "injection-cache-d2",
+        "injection-cache-d3",
+        "injection-cache-d4",
+        "injection-cache-d1"
+      ],
+      "scores": {
+        "injection-cache-d2": -1.1258831024169922,
+        "injection-cache-d4": -4.017417907714844,
+        "injection-cache-d3": -3.463071823120117,
+        "injection-cache-d0": 1.223668098449707,
+        "injection-cache-d1": -4.288658142089844,
+        "injection-cache-d5": 0.053031500428915024
+      },
+      "latency_seconds": 2.2992365999962203,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          48,
+          44,
+          45,
+          59,
+          38,
+          67
+        ],
+        "retained_lengths": [
+          48,
+          44,
+          45,
+          59,
+          38,
+          67
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.8688109777822237,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "injection-cache-en",
+      "group_id": "injection-cache",
+      "category": "injection",
+      "language": "en",
+      "track": "core",
+      "query": "Find evidence that a cache is invalidated immediately after a price update, rather than only expiring by TTL.",
+      "candidate_ids": [
+        "injection-cache-d4",
+        "injection-cache-d3",
+        "injection-cache-d2",
+        "injection-cache-d1",
+        "injection-cache-d0",
+        "injection-cache-d5"
+      ],
+      "ranking": [
+        "injection-cache-d0",
+        "injection-cache-d5",
+        "injection-cache-d2",
+        "injection-cache-d3",
+        "injection-cache-d4",
+        "injection-cache-d1"
+      ],
+      "scores": {
+        "injection-cache-d4": -1.4440863132476807,
+        "injection-cache-d3": -1.3876745700836182,
+        "injection-cache-d2": -0.6741901636123657,
+        "injection-cache-d1": -2.8194217681884766,
+        "injection-cache-d0": 2.5745604038238525,
+        "injection-cache-d5": 1.0190210342407227
+      },
+      "latency_seconds": 2.428013999997347,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          45,
+          46,
+          49,
+          39,
+          60,
+          68
+        ],
+        "retained_lengths": [
+          45,
+          46,
+          49,
+          39,
+          60,
+          68
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.8688109777822237,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 0.5,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "injection-audit-vi",
+      "group_id": "injection-audit",
+      "category": "injection",
+      "language": "vi",
+      "track": "core",
+      "query": "Chọn bằng chứng audit log bất biến: không ai kể cả admin có thể sửa bản ghi đã ghi.",
+      "candidate_ids": [
+        "injection-audit-d0",
+        "injection-audit-d3",
+        "injection-audit-d2",
+        "injection-audit-d5",
+        "injection-audit-d1",
+        "injection-audit-d4"
+      ],
+      "ranking": [
+        "injection-audit-d5",
+        "injection-audit-d4",
+        "injection-audit-d0",
+        "injection-audit-d1",
+        "injection-audit-d2",
+        "injection-audit-d3"
+      ],
+      "scores": {
+        "injection-audit-d0": -0.21121379733085632,
+        "injection-audit-d3": -5.14409065246582,
+        "injection-audit-d2": -5.078128337860107,
+        "injection-audit-d5": 0.9411327242851257,
+        "injection-audit-d1": -4.35923433303833,
+        "injection-audit-d4": 0.12953726947307587
+      },
+      "latency_seconds": 2.239672399999108,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          61,
+          33,
+          51,
+          41,
+          54,
+          42
+        ],
+        "retained_lengths": [
+          61,
+          33,
+          51,
+          41,
+          54,
+          42
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.6920202103528978,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "injection-audit-en",
+      "group_id": "injection-audit",
+      "category": "injection",
+      "language": "en",
+      "track": "core",
+      "query": "Select evidence of immutable audit logs: nobody, including an administrator, can alter an existing record.",
+      "candidate_ids": [
+        "injection-audit-d4",
+        "injection-audit-d5",
+        "injection-audit-d0",
+        "injection-audit-d1",
+        "injection-audit-d3",
+        "injection-audit-d2"
+      ],
+      "ranking": [
+        "injection-audit-d0",
+        "injection-audit-d5",
+        "injection-audit-d4",
+        "injection-audit-d3",
+        "injection-audit-d1",
+        "injection-audit-d2"
+      ],
+      "scores": {
+        "injection-audit-d4": -0.4298204183578491,
+        "injection-audit-d5": 1.4443066120147705,
+        "injection-audit-d0": 2.5509870052337646,
+        "injection-audit-d1": -4.125186443328857,
+        "injection-audit-d3": -1.9057719707489014,
+        "injection-audit-d2": -5.994208335876465
+      },
+      "latency_seconds": 2.3366597999993246,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          44,
+          43,
+          63,
+          56,
+          35,
+          53
+        ],
+        "retained_lengths": [
+          44,
+          43,
+          63,
+          56,
+          35,
+          53
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.9926195041747018,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 1.0,
+        "recall3": 1.0,
+        "hard_negative_win": 1.0
+      }
+    },
+    {
+      "id": "evidence-measured-vi",
+      "group_id": "evidence-measured",
+      "category": "evidence_quality",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm bằng chứng đã khôi phục backup thành công trong 30 phút; loại mục tiêu chưa kiểm thử.",
+      "candidate_ids": [
+        "evidence-measured-d4",
+        "evidence-measured-d5",
+        "evidence-measured-d1",
+        "evidence-measured-d3",
+        "evidence-measured-d0",
+        "evidence-measured-d2"
+      ],
+      "ranking": [
+        "evidence-measured-d4",
+        "evidence-measured-d5",
+        "evidence-measured-d0",
+        "evidence-measured-d2",
+        "evidence-measured-d1",
+        "evidence-measured-d3"
+      ],
+      "scores": {
+        "evidence-measured-d4": 1.25272536277771,
+        "evidence-measured-d5": -1.226697325706482,
+        "evidence-measured-d1": -3.2896132469177246,
+        "evidence-measured-d3": -5.638770580291748,
+        "evidence-measured-d0": -1.472213625907898,
+        "evidence-measured-d2": -3.1098570823669434
+      },
+      "latency_seconds": 2.10159840000415,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          45,
+          45,
+          48,
+          38,
+          38,
+          61
+        ],
+        "retained_lengths": [
+          45,
+          45,
+          48,
+          38,
+          38,
+          61
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.6403567395758113,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "evidence-measured-en",
+      "group_id": "evidence-measured",
+      "category": "evidence_quality",
+      "language": "en",
+      "track": "core",
+      "query": "Find evidence of a successful backup restoration within 30 minutes; exclude untested targets.",
+      "candidate_ids": [
+        "evidence-measured-d2",
+        "evidence-measured-d1",
+        "evidence-measured-d3",
+        "evidence-measured-d5",
+        "evidence-measured-d0",
+        "evidence-measured-d4"
+      ],
+      "ranking": [
+        "evidence-measured-d4",
+        "evidence-measured-d5",
+        "evidence-measured-d0",
+        "evidence-measured-d2",
+        "evidence-measured-d3",
+        "evidence-measured-d1"
+      ],
+      "scores": {
+        "evidence-measured-d2": -4.035582542419434,
+        "evidence-measured-d1": -6.272873878479004,
+        "evidence-measured-d3": -4.706319808959961,
+        "evidence-measured-d5": -2.725733757019043,
+        "evidence-measured-d0": -3.009047508239746,
+        "evidence-measured-d4": -1.9504824876785278
+      },
+      "latency_seconds": 2.0611897999988287,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          59,
+          46,
+          36,
+          43,
+          36,
+          43
+        ],
+        "retained_lengths": [
+          59,
+          46,
+          36,
+          43,
+          36,
+          43
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.68154288742782,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "evidence-quantifier-vi",
+      "group_id": "evidence-quantifier",
+      "category": "quantifier",
+      "language": "vi",
+      "track": "core",
+      "query": "Tìm bằng chứng mọi endpoint ghi dữ liệu đều kiểm tra quyền tenant ở server, không chỉ giao diện.",
+      "candidate_ids": [
+        "evidence-quantifier-d2",
+        "evidence-quantifier-d3",
+        "evidence-quantifier-d1",
+        "evidence-quantifier-d4",
+        "evidence-quantifier-d5",
+        "evidence-quantifier-d0"
+      ],
+      "ranking": [
+        "evidence-quantifier-d3",
+        "evidence-quantifier-d1",
+        "evidence-quantifier-d4",
+        "evidence-quantifier-d0",
+        "evidence-quantifier-d2",
+        "evidence-quantifier-d5"
+      ],
+      "scores": {
+        "evidence-quantifier-d2": -4.108989238739014,
+        "evidence-quantifier-d3": -0.5913168787956238,
+        "evidence-quantifier-d1": -0.9634996652603149,
+        "evidence-quantifier-d4": -1.529862403869629,
+        "evidence-quantifier-d5": -5.112359046936035,
+        "evidence-quantifier-d0": -2.040083646774292
+      },
+      "latency_seconds": 2.669950499999686,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          38,
+          48,
+          50,
+          51,
+          50,
+          64
+        ],
+        "retained_lengths": [
+          38,
+          48,
+          50,
+          51,
+          50,
+          64
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.5218459158079205,
+        "mrr5": 0.3333333333333333,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "evidence-quantifier-en",
+      "group_id": "evidence-quantifier",
+      "category": "quantifier",
+      "language": "en",
+      "track": "core",
+      "query": "Find evidence that every write endpoint enforces tenant authorization on the server, not just in the UI.",
+      "candidate_ids": [
+        "evidence-quantifier-d4",
+        "evidence-quantifier-d2",
+        "evidence-quantifier-d3",
+        "evidence-quantifier-d1",
+        "evidence-quantifier-d0",
+        "evidence-quantifier-d5"
+      ],
+      "ranking": [
+        "evidence-quantifier-d4",
+        "evidence-quantifier-d5",
+        "evidence-quantifier-d0",
+        "evidence-quantifier-d1",
+        "evidence-quantifier-d2",
+        "evidence-quantifier-d3"
+      ],
+      "scores": {
+        "evidence-quantifier-d4": 1.661851167678833,
+        "evidence-quantifier-d2": -2.579256296157837,
+        "evidence-quantifier-d3": -4.793155670166016,
+        "evidence-quantifier-d1": -1.5881083011627197,
+        "evidence-quantifier-d0": -1.500840663909912,
+        "evidence-quantifier-d5": -1.4140450954437256
+      },
+      "latency_seconds": 2.535126599999785,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          51,
+          38,
+          48,
+          50,
+          64,
+          50
+        ],
+        "retained_lengths": [
+          51,
+          38,
+          48,
+          50,
+          64,
+          50
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.7332063582049065,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 1.0,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "long-tail-vi",
+      "group_id": "long-tail",
+      "category": "evidence_position",
+      "language": "vi",
+      "track": "long_context",
+      "query": "Tìm chính sách hiện tại giữ dữ liệu đúng 7 ngày; kết luận ở cuối phụ lục được ưu tiên hơn bản nháp đầu tài liệu.",
+      "candidate_ids": [
+        "long-tail-d0",
+        "long-tail-d5",
+        "long-tail-d4",
+        "long-tail-d1",
+        "long-tail-d2",
+        "long-tail-d3"
+      ],
+      "ranking": [
+        "long-tail-d4",
+        "long-tail-d0",
+        "long-tail-d1",
+        "long-tail-d2",
+        "long-tail-d5",
+        "long-tail-d3"
+      ],
+      "scores": {
+        "long-tail-d0": 1.4011790752410889,
+        "long-tail-d5": -3.075852632522583,
+        "long-tail-d4": 1.7508093118667603,
+        "long-tail-d1": -1.198282241821289,
+        "long-tail-d2": -2.5776591300964355,
+        "long-tail-d3": -7.4162702560424805
+      },
+      "latency_seconds": 15.402651900003548,
+      "audit": {
+        "truncated_pairs": 2,
+        "input_lengths": [
+          46,
+          2819,
+          54,
+          2819,
+          43,
+          47
+        ],
+        "retained_lengths": [
+          46,
+          1024,
+          54,
+          1024,
+          43,
+          47
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.674868692170694,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.3333333333333333
+      }
+    },
+    {
+      "id": "long-tail-en",
+      "group_id": "long-tail",
+      "category": "evidence_position",
+      "language": "en",
+      "track": "long_context",
+      "query": "Find the current policy retaining data for exactly 7 days; the final appendix decision supersedes the opening draft.",
+      "candidate_ids": [
+        "long-tail-d1",
+        "long-tail-d4",
+        "long-tail-d5",
+        "long-tail-d0",
+        "long-tail-d3",
+        "long-tail-d2"
+      ],
+      "ranking": [
+        "long-tail-d0",
+        "long-tail-d4",
+        "long-tail-d1",
+        "long-tail-d5",
+        "long-tail-d2",
+        "long-tail-d3"
+      ],
+      "scores": {
+        "long-tail-d1": 1.5658183097839355,
+        "long-tail-d4": 1.875845193862915,
+        "long-tail-d5": 1.0778510570526123,
+        "long-tail-d0": 2.727081537246704,
+        "long-tail-d3": -7.409411430358887,
+        "long-tail-d2": -4.526010036468506
+      },
+      "latency_seconds": 14.967869499996596,
+      "audit": {
+        "truncated_pairs": 2,
+        "input_lengths": [
+          2814,
+          49,
+          2814,
+          41,
+          42,
+          38
+        ],
+        "retained_lengths": [
+          1024,
+          49,
+          1024,
+          41,
+          42,
+          38
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.6289425859831145,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.6666666666666666
+      }
+    },
+    {
+      "id": "long-middle-vi",
+      "group_id": "long-middle",
+      "category": "evidence_position",
+      "language": "vi",
+      "track": "long_context",
+      "query": "Chọn deployment hiện tại không gửi dữ liệu ra ngoài vùng R; phải đọc điều khoản ở giữa phụ lục.",
+      "candidate_ids": [
+        "long-middle-d0",
+        "long-middle-d2",
+        "long-middle-d4",
+        "long-middle-d3",
+        "long-middle-d1",
+        "long-middle-d5"
+      ],
+      "ranking": [
+        "long-middle-d5",
+        "long-middle-d2",
+        "long-middle-d3",
+        "long-middle-d0",
+        "long-middle-d4",
+        "long-middle-d1"
+      ],
+      "scores": {
+        "long-middle-d0": -4.08174991607666,
+        "long-middle-d2": -1.9997639656066895,
+        "long-middle-d4": -6.263641357421875,
+        "long-middle-d3": -3.281684398651123,
+        "long-middle-d1": -6.263641357421875,
+        "long-middle-d5": -0.6871005296707153
+      },
+      "latency_seconds": 14.203548399993451,
+      "audit": {
+        "truncated_pairs": 2,
+        "input_lengths": [
+          37,
+          41,
+          2814,
+          53,
+          2804,
+          49
+        ],
+        "retained_lengths": [
+          37,
+          41,
+          1024,
+          53,
+          1024,
+          49
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.674868692170694,
+        "mrr5": 1.0,
+        "hit1": 1.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.16666666666666666
+      }
+    },
+    {
+      "id": "long-middle-en",
+      "group_id": "long-middle",
+      "category": "evidence_position",
+      "language": "en",
+      "track": "long_context",
+      "query": "Select the current deployment that never sends data outside region R; inspect the clause in the middle of the appendix.",
+      "candidate_ids": [
+        "long-middle-d0",
+        "long-middle-d5",
+        "long-middle-d4",
+        "long-middle-d1",
+        "long-middle-d3",
+        "long-middle-d2"
+      ],
+      "ranking": [
+        "long-middle-d2",
+        "long-middle-d5",
+        "long-middle-d3",
+        "long-middle-d4",
+        "long-middle-d1",
+        "long-middle-d0"
+      ],
+      "scores": {
+        "long-middle-d0": -4.1078200340271,
+        "long-middle-d5": -1.0804407596588135,
+        "long-middle-d4": -3.628512382507324,
+        "long-middle-d1": -3.628512382507324,
+        "long-middle-d3": -2.5822830200195312,
+        "long-middle-d2": 0.10762662440538406
+      },
+      "latency_seconds": 15.440745599997172,
+      "audit": {
+        "truncated_pairs": 2,
+        "input_lengths": [
+          41,
+          53,
+          2818,
+          2808,
+          57,
+          45
+        ],
+        "retained_lengths": [
+          41,
+          53,
+          1024,
+          1024,
+          57,
+          45
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": {
+        "ndcg5": 0.6289425859831145,
+        "mrr5": 0.5,
+        "hit1": 0.0,
+        "strict1": 0.0,
+        "recall3": 0.5,
+        "hard_negative_win": 0.5
+      }
+    },
+    {
+      "id": "ood-cryobot-vi",
+      "group_id": "ood-cryobot",
+      "category": "unanswerable",
+      "language": "vi",
+      "track": "unanswerable",
+      "query": "Tìm phép đo chứng minh cryobot xuyên băng Europa duy trì 17 K bằng buồng neutrino pha tím.",
+      "candidate_ids": [
+        "ood-cryobot-d2",
+        "ood-cryobot-d4",
+        "ood-cryobot-d5",
+        "ood-cryobot-d1",
+        "ood-cryobot-d0",
+        "ood-cryobot-d3"
+      ],
+      "ranking": [
+        "ood-cryobot-d0",
+        "ood-cryobot-d2",
+        "ood-cryobot-d1",
+        "ood-cryobot-d3",
+        "ood-cryobot-d5",
+        "ood-cryobot-d4"
+      ],
+      "scores": {
+        "ood-cryobot-d2": -5.254575252532959,
+        "ood-cryobot-d4": -11.032876968383789,
+        "ood-cryobot-d5": -10.568711280822754,
+        "ood-cryobot-d1": -5.795955181121826,
+        "ood-cryobot-d0": -2.873932361602783,
+        "ood-cryobot-d3": -8.199249267578125
+      },
+      "latency_seconds": 2.4120279000053415,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          50,
+          41,
+          46,
+          49,
+          59,
+          48
+        ],
+        "retained_lengths": [
+          50,
+          41,
+          46,
+          49,
+          59,
+          48
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-cryobot-en",
+      "group_id": "ood-cryobot",
+      "category": "unanswerable",
+      "language": "en",
+      "track": "unanswerable",
+      "query": "Find a measurement proving a Europa cryobot maintains 17 K with a violet-phase neutrino chamber.",
+      "candidate_ids": [
+        "ood-cryobot-d1",
+        "ood-cryobot-d0",
+        "ood-cryobot-d4",
+        "ood-cryobot-d3",
+        "ood-cryobot-d2",
+        "ood-cryobot-d5"
+      ],
+      "ranking": [
+        "ood-cryobot-d0",
+        "ood-cryobot-d2",
+        "ood-cryobot-d1",
+        "ood-cryobot-d3",
+        "ood-cryobot-d5",
+        "ood-cryobot-d4"
+      ],
+      "scores": {
+        "ood-cryobot-d1": -7.829002380371094,
+        "ood-cryobot-d0": -3.4114160537719727,
+        "ood-cryobot-d4": -11.03797721862793,
+        "ood-cryobot-d3": -8.120149612426758,
+        "ood-cryobot-d2": -5.529411315917969,
+        "ood-cryobot-d5": -8.820355415344238
+      },
+      "latency_seconds": 2.4988040999960504,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          50,
+          60,
+          42,
+          49,
+          51,
+          47
+        ],
+        "retained_lengths": [
+          50,
+          60,
+          42,
+          49,
+          51,
+          47
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-guarantee-vi",
+      "group_id": "ood-guarantee",
+      "category": "unanswerable",
+      "language": "vi",
+      "track": "unanswerable",
+      "query": "Tìm chứng minh thuật toán nén lossless rút mọi chuỗi bit bất kỳ xuống đúng 1 bit.",
+      "candidate_ids": [
+        "ood-guarantee-d2",
+        "ood-guarantee-d0",
+        "ood-guarantee-d4",
+        "ood-guarantee-d3",
+        "ood-guarantee-d1",
+        "ood-guarantee-d5"
+      ],
+      "ranking": [
+        "ood-guarantee-d0",
+        "ood-guarantee-d2",
+        "ood-guarantee-d3",
+        "ood-guarantee-d1",
+        "ood-guarantee-d4",
+        "ood-guarantee-d5"
+      ],
+      "scores": {
+        "ood-guarantee-d2": -4.448396682739258,
+        "ood-guarantee-d0": -1.24733567237854,
+        "ood-guarantee-d4": -9.63909912109375,
+        "ood-guarantee-d3": -5.073026657104492,
+        "ood-guarantee-d1": -7.104403972625732,
+        "ood-guarantee-d5": -11.034555435180664
+      },
+      "latency_seconds": 2.243679699997301,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          46,
+          56,
+          42,
+          45,
+          44,
+          37
+        ],
+        "retained_lengths": [
+          46,
+          56,
+          42,
+          45,
+          44,
+          37
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-guarantee-en",
+      "group_id": "ood-guarantee",
+      "category": "unanswerable",
+      "language": "en",
+      "track": "unanswerable",
+      "query": "Find a proof of lossless compression mapping every arbitrary bit string to exactly one bit.",
+      "candidate_ids": [
+        "ood-guarantee-d2",
+        "ood-guarantee-d0",
+        "ood-guarantee-d1",
+        "ood-guarantee-d3",
+        "ood-guarantee-d5",
+        "ood-guarantee-d4"
+      ],
+      "ranking": [
+        "ood-guarantee-d0",
+        "ood-guarantee-d2",
+        "ood-guarantee-d3",
+        "ood-guarantee-d1",
+        "ood-guarantee-d4",
+        "ood-guarantee-d5"
+      ],
+      "scores": {
+        "ood-guarantee-d2": -3.3991949558258057,
+        "ood-guarantee-d0": 0.16974639892578125,
+        "ood-guarantee-d1": -8.413864135742188,
+        "ood-guarantee-d3": -6.1436309814453125,
+        "ood-guarantee-d5": -11.030473709106445,
+        "ood-guarantee-d4": -10.276754379272461
+      },
+      "latency_seconds": 2.146145200000319,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          46,
+          56,
+          44,
+          45,
+          37,
+          42
+        ],
+        "retained_lengths": [
+          46,
+          56,
+          44,
+          45,
+          37,
+          42
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-private-vi",
+      "group_id": "ood-private",
+      "category": "unanswerable",
+      "language": "vi",
+      "track": "unanswerable",
+      "query": "Tìm kết quả thử nghiệm dự án hư cấu Zorbel-77 ngày 2099-01-01 với throughput 123456 TPS.",
+      "candidate_ids": [
+        "ood-private-d2",
+        "ood-private-d5",
+        "ood-private-d4",
+        "ood-private-d3",
+        "ood-private-d1",
+        "ood-private-d0"
+      ],
+      "ranking": [
+        "ood-private-d3",
+        "ood-private-d4",
+        "ood-private-d2",
+        "ood-private-d1",
+        "ood-private-d5",
+        "ood-private-d0"
+      ],
+      "scores": {
+        "ood-private-d2": -7.178121566772461,
+        "ood-private-d5": -9.103104591369629,
+        "ood-private-d4": -3.476227283477783,
+        "ood-private-d3": -1.7745985984802246,
+        "ood-private-d1": -8.197735786437988,
+        "ood-private-d0": -11.028619766235352
+      },
+      "latency_seconds": 2.482312100000854,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          48,
+          50,
+          52,
+          59,
+          51,
+          43
+        ],
+        "retained_lengths": [
+          48,
+          50,
+          52,
+          59,
+          51,
+          43
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-private-en",
+      "group_id": "ood-private",
+      "category": "unanswerable",
+      "language": "en",
+      "track": "unanswerable",
+      "query": "Find test results for fictional project Zorbel-77 on 2099-01-01 with throughput 123456 TPS.",
+      "candidate_ids": [
+        "ood-private-d4",
+        "ood-private-d0",
+        "ood-private-d1",
+        "ood-private-d5",
+        "ood-private-d3",
+        "ood-private-d2"
+      ],
+      "ranking": [
+        "ood-private-d3",
+        "ood-private-d4",
+        "ood-private-d2",
+        "ood-private-d1",
+        "ood-private-d5",
+        "ood-private-d0"
+      ],
+      "scores": {
+        "ood-private-d4": -5.182271480560303,
+        "ood-private-d0": -11.034515380859375,
+        "ood-private-d1": -8.744611740112305,
+        "ood-private-d5": -8.802654266357422,
+        "ood-private-d3": -2.720703601837158,
+        "ood-private-d2": -7.875096321105957
+      },
+      "latency_seconds": 2.3014638000022387,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          49,
+          40,
+          48,
+          47,
+          56,
+          45
+        ],
+        "retained_lengths": [
+          49,
+          40,
+          48,
+          47,
+          56,
+          45
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-missing-vi",
+      "group_id": "ood-missing",
+      "category": "unanswerable",
+      "language": "vi",
+      "track": "unanswerable",
+      "query": "Tìm mật mã 12 ký tự đã xác thực của két hư cấu Aster-Z9, chỉ từ bằng chứng được cung cấp.",
+      "candidate_ids": [
+        "ood-missing-d2",
+        "ood-missing-d5",
+        "ood-missing-d3",
+        "ood-missing-d4",
+        "ood-missing-d0",
+        "ood-missing-d1"
+      ],
+      "ranking": [
+        "ood-missing-d2",
+        "ood-missing-d1",
+        "ood-missing-d3",
+        "ood-missing-d0",
+        "ood-missing-d4",
+        "ood-missing-d5"
+      ],
+      "scores": {
+        "ood-missing-d2": -3.5577340126037598,
+        "ood-missing-d5": -11.03494644165039,
+        "ood-missing-d3": -7.158354759216309,
+        "ood-missing-d4": -11.01815128326416,
+        "ood-missing-d0": -8.008968353271484,
+        "ood-missing-d1": -5.468748569488525
+      },
+      "latency_seconds": 2.5794882999980473,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          62,
+          49,
+          52,
+          44,
+          51,
+          53
+        ],
+        "retained_lengths": [
+          62,
+          49,
+          52,
+          44,
+          51,
+          53
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    },
+    {
+      "id": "ood-missing-en",
+      "group_id": "ood-missing",
+      "category": "unanswerable",
+      "language": "en",
+      "track": "unanswerable",
+      "query": "Find the verified 12-character code for fictional vault Aster-Z9 using only the supplied evidence.",
+      "candidate_ids": [
+        "ood-missing-d1",
+        "ood-missing-d4",
+        "ood-missing-d2",
+        "ood-missing-d3",
+        "ood-missing-d5",
+        "ood-missing-d0"
+      ],
+      "ranking": [
+        "ood-missing-d2",
+        "ood-missing-d3",
+        "ood-missing-d1",
+        "ood-missing-d0",
+        "ood-missing-d5",
+        "ood-missing-d4"
+      ],
+      "scores": {
+        "ood-missing-d1": -8.194829940795898,
+        "ood-missing-d4": -11.031455993652344,
+        "ood-missing-d2": -4.387491226196289,
+        "ood-missing-d3": -7.761952877044678,
+        "ood-missing-d5": -10.969276428222656,
+        "ood-missing-d0": -8.861473083496094
+      },
+      "latency_seconds": 2.4609043000018573,
+      "audit": {
+        "truncated_pairs": 0,
+        "input_lengths": [
+          51,
+          42,
+          60,
+          50,
+          47,
+          49
+        ],
+        "retained_lengths": [
+          51,
+          42,
+          60,
+          50,
+          47,
+          49
+        ],
+        "length_unit": "model_tokens"
+      },
+      "metrics": null
+    }
+  ],
+  "load_seconds": 44.56853549999505,
+  "backend": {
+    "model_id": "BAAI/bge-reranker-v2-m3",
+    "model_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "requested_revision": "default/cached",
+    "device": "cpu",
+    "dtype": "float32",
+    "quantization": "none",
+    "max_length": 1024,
+    "batch_size": 1,
+    "score_kind": "classification_logit",
+    "prompt": null
+  },
+  "warmup_seconds": 0.48247210000408813,
+  "summary": {
+    "queries": 48,
+    "ndcg5": 0.755706597786152,
+    "mrr5": 0.8225694444444445,
+    "hit1": 0.7083333333333334,
+    "strict1": 0.5208333333333334,
+    "recall3": 0.6145833333333334,
+    "hard_negative_win": 0.7847222222222222
+  },
+  "by_track": {
+    "core": {
+      "queries": 44,
+      "ndcg5": 0.7651430485779017,
+      "mrr5": 0.8291666666666667,
+      "hit1": 0.7272727272727273,
+      "strict1": 0.5681818181818182,
+      "recall3": 0.625,
+      "hard_negative_win": 0.8181818181818181
+    },
+    "long_context": {
+      "queries": 4,
+      "ndcg5": 0.6519056390769042,
+      "mrr5": 0.75,
+      "hit1": 0.5,
+      "strict1": 0.0,
+      "recall3": 0.5,
+      "hard_negative_win": 0.41666666666666663
+    },
+    "unanswerable": {
+      "queries": 0
+    }
+  },
+  "by_category": {
+    "causal": {
+      "queries": 4,
+      "ndcg5": 0.9324023593276387,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 1.0,
+      "recall3": 0.75,
+      "hard_negative_win": 1.0
+    },
+    "code": {
+      "queries": 4,
+      "ndcg5": 0.7147751147833256,
+      "mrr5": 0.75,
+      "hit1": 0.5,
+      "strict1": 0.5,
+      "recall3": 0.5,
+      "hard_negative_win": 1.0
+    },
+    "conjunction": {
+      "queries": 2,
+      "ndcg5": 0.9049495058460971,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 1.0,
+      "recall3": 1.0,
+      "hard_negative_win": 1.0
+    },
+    "crosslingual": {
+      "queries": 4,
+      "ndcg5": 0.849289552310567,
+      "mrr5": 0.875,
+      "hit1": 0.75,
+      "strict1": 0.5,
+      "recall3": 1.0,
+      "hard_negative_win": 1.0
+    },
+    "entity": {
+      "queries": 4,
+      "ndcg5": 0.8524109758679534,
+      "mrr5": 0.875,
+      "hit1": 0.75,
+      "strict1": 0.75,
+      "recall3": 0.5,
+      "hard_negative_win": 0.9166666666666666
+    },
+    "evidence_position": {
+      "queries": 4,
+      "ndcg5": 0.6519056390769042,
+      "mrr5": 0.75,
+      "hit1": 0.5,
+      "strict1": 0.0,
+      "recall3": 0.5,
+      "hard_negative_win": 0.41666666666666663
+    },
+    "evidence_quality": {
+      "queries": 2,
+      "ndcg5": 0.6609498135018157,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 0.0,
+      "recall3": 0.5,
+      "hard_negative_win": 0.3333333333333333
+    },
+    "injection": {
+      "queries": 4,
+      "ndcg5": 0.8555654175230117,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 0.75,
+      "recall3": 0.75,
+      "hard_negative_win": 0.9166666666666666
+    },
+    "logic": {
+      "queries": 2,
+      "ndcg5": 0.27310245322687765,
+      "mrr5": 0.2,
+      "hit1": 0.0,
+      "strict1": 0.0,
+      "recall3": 0.0,
+      "hard_negative_win": 0.0
+    },
+    "multihop": {
+      "queries": 4,
+      "ndcg5": 0.8748340657928693,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 1.0,
+      "recall3": 0.5,
+      "hard_negative_win": 1.0
+    },
+    "negation": {
+      "queries": 4,
+      "ndcg5": 0.5752460036872883,
+      "mrr5": 0.5625,
+      "hit1": 0.25,
+      "strict1": 0.0,
+      "recall3": 0.625,
+      "hard_negative_win": 0.5833333333333333
+    },
+    "numeric": {
+      "queries": 4,
+      "ndcg5": 0.6582103475061546,
+      "mrr5": 0.625,
+      "hit1": 0.5,
+      "strict1": 0.5,
+      "recall3": 0.25,
+      "hard_negative_win": 0.6666666666666666
+    },
+    "quantifier": {
+      "queries": 2,
+      "ndcg5": 0.6275261370064136,
+      "mrr5": 0.6666666666666666,
+      "hit1": 0.5,
+      "strict1": 0.0,
+      "recall3": 0.75,
+      "hard_negative_win": 0.5
+    },
+    "temporal": {
+      "queries": 4,
+      "ndcg5": 0.8705757427675088,
+      "mrr5": 1.0,
+      "hit1": 1.0,
+      "strict1": 0.75,
+      "recall3": 0.875,
+      "hard_negative_win": 1.0
+    },
+    "unanswerable": {
+      "queries": 0
+    }
+  },
+  "by_language_core": {
+    "vi": {
+      "queries": 22,
+      "ndcg5": 0.7505440684528912,
+      "mrr5": 0.8196969696969697,
+      "hit1": 0.7272727272727273,
+      "strict1": 0.5909090909090909,
+      "recall3": 0.5909090909090909,
+      "hard_negative_win": 0.7878787878787878
+    },
+    "en": {
+      "queries": 22,
+      "ndcg5": 0.7797420287029123,
+      "mrr5": 0.8386363636363636,
+      "hit1": 0.7272727272727273,
+      "strict1": 0.5454545454545454,
+      "recall3": 0.6590909090909091,
+      "hard_negative_win": 0.8484848484848485
+    }
+  },
+  "performance": {
+    "p50_query_seconds": 2.3482972500023607,
+    "p95_query_seconds": 14.394628674994237,
+    "scored_pairs": 336,
+    "scoring_seconds": 177.9080055000013,
+    "pairs_per_second": 1.8886165299627145,
+    "timing_repetitions": 1,
+    "includes_tokenization": true,
+    "includes_network": false
+  },
+  "completed_queries": 56,
+  "wall_seconds": 223.16942389999895,
+  "ended_utc": "2026-09-24T09:10:39.453740+00:00"
+}
