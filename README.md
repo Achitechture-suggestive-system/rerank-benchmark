@@ -86,9 +86,9 @@ Embedding thường mã hóa `q` và `d` riêng rồi so cosine hoặc dot produ
 
 Trong một attention head, với ma trận trạng thái token `H`, ta tính các phép chiếu `Q = HW_Q`, `K = HW_K`, `V = HW_V`, rồi:
 
-$$
-\operatorname{Attention}(H)=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-$$
+```math
+\mathrm{Attention}(H)=\mathrm{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
+```
 
 Chữ `Q` trong công thức là ma trận query của attention, không chỉ chuỗi câu hỏi người dùng. `M` che các vị trí padding hoặc vị trí tương lai trong decoder. Nhiều lớp attention, residual connection và feed-forward cập nhật biểu diễn; đầu ra cuối được chuyển thành một scalar `s(q,d)`.
 
@@ -102,13 +102,13 @@ Checkpoint dùng `XLMRobertaForSequenceClassification`: 24 lớp, hidden size 10
 
 Viết giản lược:
 
-$$
+```math
 \begin{aligned}
-h &= \operatorname{Encoder}([q;d])_{0} \\
+h &= \mathrm{Encoder}([q;d])_{0} \\
 z &= w^\top\tanh(Wh+b)+c \\
 s &= \sigma(z)=\frac{1}{1+e^{-z}}
 \end{aligned}
-$$
+```
 
 Repo giữ **raw logit `z`** để tránh sigmoid bão hòa làm mất độ phân giải. Vì sigmoid đơn điệu, thứ hạng lý tưởng của `z` và `sigmoid(z)` giống nhau. Điểm âm hoàn toàn bình thường. Không diễn giải `sigmoid(z)=0.9` thành “90% bằng chứng đúng”. Model card cung cấp cả cách dùng `AutoModelForSequenceClassification` và FlagEmbedding. [BGE M3 model card](https://huggingface.co/BAAI/bge-reranker-v2-m3).
 
@@ -116,10 +116,10 @@ Repo giữ **raw logit `z`** để tránh sigmoid bão hòa làm mất độ ph�
 
 Qwen nhận instruction, query và document trong một prompt; decoder xử lý với causal mask. Vị trí đánh giá ở cuối đã nhìn được query lẫn tài liệu trước đó. Adapter đọc logits của hai token `yes` và `no`, lưu hiệu `z_yes - z_no`. Nếu cần chuẩn hóa:
 
-$$
+```math
 s=\frac{e^{z_{yes}}}{e^{z_{yes}}+e^{z_{no}}}
 =\sigma(z_{yes}-z_{no}).
-$$
+```
 
 Đây là softmax trên **hai lựa chọn**, không phải xác suất `yes` trên toàn vocabulary. Prompt kết thúc bằng vùng `<think>` rỗng; adapter không sinh bài giải hay chuỗi suy luận. Chấm rerank khác việc hỏi một chat model tự bịa ra điểm. Checkpoint 4B có 36 lớp, cửa sổ công bố 32K; repo dùng cửa sổ nhỏ hơn để kiểm soát tài nguyên. [Qwen model card và inference chính thức](https://huggingface.co/Qwen/Qwen3-Reranker-4B), [Qwen technical report](https://arxiv.org/abs/2506.05176).
 
@@ -133,9 +133,9 @@ Luồng adapter là `BOS + A: query + B: passage + prompt`. Với cấu hình `l
 
 Nén gom các nhóm trạng thái token passage liền nhau và lấy trung bình có xét token hợp lệ; query và prompt được giữ. Với nhóm đầy đủ tỷ lệ `r`, trực giác là:
 
-$$
+```math
 \tilde h_j=\frac{1}{r}\sum_{t=rj}^{rj+r-1}h_t.
-$$
+```
 
 Nhóm cuối dùng số token thật làm mẫu số. Đây là gộp **hidden states**, không phải tóm tắt văn bản bằng một LLM khác. Chạy ít lớp hơn giảm số block; nén giảm số vị trí của các lớp còn lại. Lợi ích FLOPs không tự suy ra cùng tỷ lệ giảm latency hoặc VRAM. Chi tiết phủ định/ngưỡng số cũng có thể mất sắc nét khi gộp. [Hàm `token_compress` trong mã checkpoint](https://huggingface.co/BAAI/bge-reranker-v2.5-gemma2-lightweight/blob/fabc9f6f51698e30890300fa3917f0560fdbcd75/gemma_model.py).
 
@@ -155,9 +155,9 @@ Không có đủ công bố để khẳng định số layer, tham số, attenti
 
 Huấn luyện ranking làm điểm của cặp phù hợp cao hơn cặp không phù hợp theo phân phối huấn luyện. Để hình dung, một loss xếp hạng đôi thường có dạng:
 
-$$
+```math
 L=\log\left(1+\exp\left[-(s(q,d^+)-s(q,d^-))\right]\right).
-$$
+```
 
 Đây là **minh họa một mục tiêu ranking**, không khẳng định cả bốn checkpoint dùng loss này. Chỉ cần phân biệt tương đối tốt có thể giảm loss, trong khi score vẫn chưa được hiệu chuẩn giữa query/domain. Nếu cả sáu tài liệu sai, vẫn tồn tại một tài liệu có điểm cao nhất. Cần lớp kiểm tra evidence/abstention riêng, không gắn ngưỡng `0.5` chung cho BGE, Qwen và Cohere.
 
