@@ -479,9 +479,33 @@ Adapter dùng custom code của checkpoint và yêu cầu pin immutable SHA đ�
 
 Cấu hình `COHERE_API_KEY` trong môi trường trước khi chạy; không lưu key vào repo, JSON hay README. Adapter dùng HTTPS bằng thư viện chuẩn, không cần Cohere SDK. Lệnh này gửi fixture tổng hợp lên API và sử dụng quota tài khoản; mỗi query một request cộng một request warm-up, chưa tính retry.
 
+Trial key của Cohere có giới hạn Rerank theo phút. Với trial key, nên pacing khoảng 6.2 giây giữa các request bằng `--cohere-min-interval 6.2`; adapter cũng đọc `Retry-After` và dùng exponential backoff cho HTTP 429/5xx. Nếu một run bị ngắt sau một số query, dùng `--resume` trên đúng thư mục output để tiếp tục prefix đã lưu, không gửi lại warm-up hoặc các query đã hoàn tất.
+
 ```powershell
-python -m benchmark.run --models cohere-pro --max-length 1024 --output results/cohere-pro-new
-python -m benchmark.run --models cohere-fast --max-length 1024 --output results/cohere-fast-new
+python -m benchmark.run `
+  --models cohere-pro `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --output results/cohere-pro-new
+python -m benchmark.run `
+  --models cohere-fast `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --output results/cohere-fast-new
+```
+
+Tiếp tục artifact bị lỗi/gián đoạn:
+
+```powershell
+python -m benchmark.run `
+  --models cohere-pro `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --resume `
+  --output results/cohere-pro-new
 ```
 
 Khi thiếu key, runner ghi `skipped`. Lỗi inference/API ghi `failed` và giữ các record đã hoàn tất; không biến failure thành score 0. API phải trả đủ mỗi candidate đúng một lần; adapter ánh xạ qua `index`, không nhầm thứ tự response với thứ tự input.

@@ -7,6 +7,8 @@ import re
 import time
 import urllib.error
 import urllib.request
+from email.utils import parsedate_to_datetime
+from datetime import datetime, timezone
 
 MODEL_IDS = {
     "bge-m3": "BAAI/bge-reranker-v2-m3",
@@ -59,25 +61,75 @@ class Cohere:
             raise RuntimeError("COHERE_API_KEY is not configured")
         self.model = MODEL_IDS[name]
         self.max_length = args.max_length
+        self.min_interval = max(0.0, args.cohere_min_interval)
+        self.max_attempts = args.cohere_max_attempts
+        self._last_request_started = None
+        self._not_before = 0.0
         self.info = dict(model_id=self.model, device="hosted", score_kind="vendor_relevance_score",
                          token_policy="provider_max_tokens_per_doc; tokenizer and actual truncation not observable",
-                         max_tokens_per_doc=self.max_length, provider_revision="not exposed by API")
+                         max_tokens_per_doc=self.max_length, provider_revision="not exposed by API",
+                         min_request_interval_seconds=self.min_interval,
+                         max_request_attempts=self.max_attempts,
+                         rate_limit_policy="Retry-After plus exponential backoff")
+
+    @staticmethod
+    def _retry_after_seconds(headers):
+        value = headers.get("Retry-After") if headers else None
+        if not value:
+            return None
+        try:
+            return max(0.0, float(value))
+        except ValueError:
+            try:
+                target = parsedate_to_datetime(value)
+                if target.tzinfo is None:
+                    target = target.replace(tzinfo=timezone.utc)
+                return max(0.0, (target - datetime.now(timezone.utc)).total_seconds())
+            except (TypeError, ValueError, OverflowError):
+                return None
+
+    def _wait_for_slot(self):
+        now = time.monotonic()
+        target = self._not_before
+        if self._last_request_started is not None:
+            target = max(target, self._last_request_started + self.min_interval)
+        wait = max(0.0, target - now)
+        if wait:
+            time.sleep(wait)
+        return wait
 
     def score(self, query, documents):
         body = json.dumps(dict(model=self.model, query=query, documents=documents,
                                top_n=len(documents), max_tokens_per_doc=self.max_length)).encode()
         request = urllib.request.Request("https://api.cohere.com/v2/rerank", body,
                                          {"Authorization": "Bearer " + self.key, "Content-Type": "application/json"})
-        for attempt in range(3):
+        wait_seconds = 0.0
+        for attempt in range(self.max_attempts):
+            wait_seconds += self._wait_for_slot()
+            self._last_request_started = time.monotonic()
             try:
                 with urllib.request.urlopen(request, timeout=60) as response:
                     payload = json.load(response)
                 return cohere_scores(payload, len(documents)), dict(truncated_pairs=None,
-                    request_id=payload.get("id"), billed_units=payload.get("meta", {}).get("billed_units"), attempts=attempt + 1)
+                    request_id=payload.get("id"), billed_units=payload.get("meta", {}).get("billed_units"),
+                    attempts=attempt + 1, rate_limit_wait_seconds=wait_seconds)
             except urllib.error.HTTPError as exc:
-                if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
-                    raise RuntimeError(f"Cohere HTTP {exc.code}") from None
-                time.sleep(2 ** attempt)
+                retryable = exc.code in (429, 500, 502, 503, 504)
+                if not retryable or attempt + 1 >= self.max_attempts:
+                    detail = ""
+                    try:
+                        detail = exc.read().decode("utf-8", errors="replace").strip()[:500]
+                    except Exception:
+                        pass
+                    suffix = f": {detail}" if detail else ""
+                    raise RuntimeError(f"Cohere HTTP {exc.code}{suffix}") from None
+                retry_after = self._retry_after_seconds(exc.headers)
+                delay = retry_after if retry_after is not None else min(65.0, 2 ** attempt)
+                self._not_before = max(self._not_before, time.monotonic() + delay)
+            except (urllib.error.URLError, TimeoutError) as exc:
+                if attempt + 1 >= self.max_attempts:
+                    raise RuntimeError(f"Cohere request failed after {attempt + 1} attempts: {exc}") from None
+                self._not_before = max(self._not_before, time.monotonic() + min(65.0, 2 ** attempt))
         raise RuntimeError("Cohere retry limit reached")
 
 
