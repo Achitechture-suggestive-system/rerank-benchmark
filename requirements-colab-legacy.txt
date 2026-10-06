@@ -1,0 +1,10 @@
+# Gemma/GTE/Jina publisher modules use the legacy Transformers API.
+torch==2.6.0
+transformers==4.44.2
+tokenizers==0.19.1
+huggingface-hub==0.30.2
+safetensors==0.5.3
+sentencepiece==0.2.0
+protobuf==5.29.4
+numpy==1.26.4
+einops==0.8.1
