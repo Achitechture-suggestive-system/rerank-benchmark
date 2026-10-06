@@ -10,6 +10,8 @@ import urllib.request
 from email.utils import parsedate_to_datetime
 from datetime import datetime, timezone
 
+from .catalog import RERANKERS
+
 MODEL_IDS = {
     "bge-m3": "BAAI/bge-reranker-v2-m3",
     "qwen4b": "Qwen/Qwen3-Reranker-4B",
@@ -18,6 +20,7 @@ MODEL_IDS = {
     "cohere-fast": "rerank-v4.0-fast",
     "bm25": "local-bm25-k1=1.2-b=0.75",
 }
+MODEL_IDS.update({name: spec.model_id for name, spec in RERANKERS.items()})
 QWEN_PREFIX = '<|im_start|>system\nJudge whether the Document meets the requirements based on the Query and the Instruct provided. Note that the answer can only be "yes" or "no".<|im_end|>\n<|im_start|>user\n'
 QWEN_SUFFIX = '<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n'
 QWEN_INSTRUCTION = "Given a web search query, retrieve relevant passages that answer the query"
@@ -61,8 +64,8 @@ class Cohere:
             raise RuntimeError("COHERE_API_KEY is not configured")
         self.model = MODEL_IDS[name]
         self.max_length = args.max_length
-        self.min_interval = max(0.0, args.cohere_min_interval)
-        self.max_attempts = args.cohere_max_attempts
+        self.min_interval = max(0.0, getattr(args, "cohere_min_interval", 6.2))
+        self.max_attempts = getattr(args, "cohere_max_attempts", 8)
         self._last_request_started = None
         self._not_before = 0.0
         self.info = dict(model_id=self.model, device="hosted", score_kind="vendor_relevance_score",
@@ -103,16 +106,18 @@ class Cohere:
                                top_n=len(documents), max_tokens_per_doc=self.max_length)).encode()
         request = urllib.request.Request("https://api.cohere.com/v2/rerank", body,
                                          {"Authorization": "Bearer " + self.key, "Content-Type": "application/json"})
-        wait_seconds = 0.0
+        wait_seconds, request_seconds = 0.0, 0.0
         for attempt in range(self.max_attempts):
             wait_seconds += self._wait_for_slot()
             self._last_request_started = time.monotonic()
+            request_start = time.perf_counter()
             try:
                 with urllib.request.urlopen(request, timeout=60) as response:
                     payload = json.load(response)
                 return cohere_scores(payload, len(documents)), dict(truncated_pairs=None,
                     request_id=payload.get("id"), billed_units=payload.get("meta", {}).get("billed_units"),
-                    attempts=attempt + 1, rate_limit_wait_seconds=wait_seconds)
+                    attempts=attempt + 1, rate_limit_wait_seconds=wait_seconds,
+                    request_seconds=request_seconds + time.perf_counter() - request_start)
             except urllib.error.HTTPError as exc:
                 retryable = exc.code in (429, 500, 502, 503, 504)
                 if not retryable or attempt + 1 >= self.max_attempts:
@@ -121,15 +126,18 @@ class Cohere:
                         detail = exc.read().decode("utf-8", errors="replace").strip()[:500]
                     except Exception:
                         pass
+                    # Provider error bodies can echo user input. Redact credentials.
+                    detail = detail.replace(self.key, "[REDACTED]")
                     suffix = f": {detail}" if detail else ""
                     raise RuntimeError(f"Cohere HTTP {exc.code}{suffix}") from None
                 retry_after = self._retry_after_seconds(exc.headers)
-                delay = retry_after if retry_after is not None else min(65.0, 2 ** attempt)
+                delay = max(retry_after or 0.0, min(60.0, (10 if exc.code == 429 else 2) * 2 ** attempt))
                 self._not_before = max(self._not_before, time.monotonic() + delay)
             except (urllib.error.URLError, TimeoutError) as exc:
                 if attempt + 1 >= self.max_attempts:
-                    raise RuntimeError(f"Cohere request failed after {attempt + 1} attempts: {exc}") from None
+                    raise RuntimeError(f"Cohere network/timeout failure after {attempt + 1} attempts") from None
                 self._not_before = max(self._not_before, time.monotonic() + min(65.0, 2 ** attempt))
+            request_seconds += time.perf_counter() - request_start
         raise RuntimeError("Cohere retry limit reached")
 
 
@@ -139,31 +147,42 @@ class LocalModel:
         import transformers
         from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModelForCausalLM
         self.torch, self.name, self.args = torch, name, args
+        spec = RERANKERS[name]
+        self.family = spec.family
+        self.max_length = min(args.max_length, spec.max_tokens)
         torch.set_num_threads(args.threads)
         torch.manual_seed(args.seed)
         if args.device == "cuda" and not torch.cuda.is_available():
             raise RuntimeError("CUDA is not available in the installed torch runtime")
         dtype = {"float32": torch.float32, "float16": torch.float16, "bfloat16": torch.bfloat16}[args.dtype]
         kw = {"local_files_only": args.local_files_only}
-        if args.revision:
-            kw["revision"] = args.revision
+        revision = args.revision or spec.revision
+        kw["revision"] = revision
+        if spec.custom_code and name != "gemma":
+            if not getattr(args, "trust_remote_code", False):
+                raise ValueError(f"{name} needs --trust-remote-code with pinned publisher code")
+            kw.update(trust_remote_code=True, code_revision=spec.code_revision or revision)
+            if name == "jina-v2":
+                kw["use_flash_attn"] = False
         if name == "gemma":
-            if not args.revision or not re.fullmatch(r"[0-9a-f]{40}", args.revision):
+            if not re.fullmatch(r"[0-9a-f]{40}", revision):
                 raise ValueError("Gemma custom code requires --revision with an immutable 40-character commit SHA")
             # The author-supplied custom module imports internals removed in newer versions.
             major, minor = map(int, transformers.__version__.split(".")[:2])
             if major != 4 or not (42 <= minor <= 44):
                 raise RuntimeError("Gemma custom code needs a separate transformers 4.42-4.44 environment; this adapter has not been inference-verified")
-            kw.update(trust_remote_code=True, code_revision=args.revision)
-        self.tokenizer = AutoTokenizer.from_pretrained(MODEL_IDS[name], **kw)
-        factory = AutoModelForSequenceClassification if name == "bge-m3" else AutoModelForCausalLM
+            kw.update(trust_remote_code=True, code_revision=revision)
+        tokenizer_kw = {k: v for k, v in kw.items() if k != "use_flash_attn"}
+        self.tokenizer = AutoTokenizer.from_pretrained(MODEL_IDS[name], **tokenizer_kw)
+        factory = AutoModelForSequenceClassification if self.family == "classifier" else AutoModelForCausalLM
         self.model = factory.from_pretrained(MODEL_IDS[name], torch_dtype=dtype, **kw).to(args.device).eval()
         self.info = dict(model_id=MODEL_IDS[name], model_revision=getattr(self.model.config, "_commit_hash", None),
-                         requested_revision=args.revision or "default/cached", device=args.device, dtype=args.dtype,
-                         quantization="none", max_length=args.max_length, batch_size=args.batch_size,
-                         score_kind="classification_logit" if name == "bge-m3" else "yes_minus_no_logit" if name == "qwen4b" else "layerwise_scalar_head",
-                         prompt=QWEN_INSTRUCTION if name == "qwen4b" else GEMMA_PROMPT if name == "gemma" else None)
-        if name == "qwen4b":
+                         requested_revision=revision, code_revision=spec.code_revision or (revision if spec.custom_code else None),
+                         device=args.device, dtype=args.dtype, quantization="none", max_length=self.max_length,
+                         requested_max_length=args.max_length, batch_size=args.batch_size,
+                         score_kind="classification_logit" if self.family == "classifier" else "yes_minus_no_logit" if self.family == "qwen" else "layerwise_scalar_head",
+                         prompt=QWEN_INSTRUCTION if self.family == "qwen" else GEMMA_PROMPT if name == "gemma" else None)
+        if self.family == "qwen":
             self.tokenizer.padding_side = "left"
             self.tokenizer.pad_token = self.tokenizer.eos_token
             self.prefix = self.tokenizer.encode(QWEN_PREFIX, add_special_tokens=False)
@@ -183,14 +202,14 @@ class LocalModel:
             self.torch.cuda.synchronize()
 
     def encode(self, query, documents):
-        tok, cap = self.tokenizer, self.args.max_length
+        tok, cap = self.tokenizer, self.max_length
         truncated, lengths, retained, items, query_lens, prompt_lens = 0, [], [], [], [], []
         for doc in documents:
-            if self.name == "bge-m3":
+            if self.family == "classifier":
                 full = tok(query, doc, truncation=False)["input_ids"]
                 item = tok(query, doc, truncation="only_second", max_length=cap)
                 size = len(full)
-            elif self.name == "qwen4b":
+            elif self.family == "qwen":
                 body = tok.encode(f"<Instruct>: {QWEN_INSTRUCTION}\n<Query>: {query}\n<Document>: {doc}", add_special_tokens=False)
                 budget = cap - len(self.prefix) - len(self.suffix)
                 query_only = tok.encode(f"<Instruct>: {QWEN_INSTRUCTION}\n<Query>: {query}\n<Document>: ", add_special_tokens=False)
@@ -228,9 +247,9 @@ class LocalModel:
         with self.torch.inference_mode():
             for start in range(0, len(documents), self.args.batch_size):
                 inputs, extras, stats = self.encode(query, documents[start:start + self.args.batch_size])
-                if self.name == "bge-m3":
+                if self.family == "classifier":
                     out = self.model(**inputs).logits.reshape(-1).float()
-                elif self.name == "qwen4b":
+                elif self.family == "qwen":
                     logits = self.model(**inputs, use_cache=False, logits_to_keep=1).logits[:, -1, :].float()
                     out = logits[:, self.yes[0]] - logits[:, self.no[0]]
                 else:
