@@ -4,6 +4,24 @@ Bài kiểm tra này đo khả năng **đưa bằng chứng đáp ứng đúng y
 
 **Quy mô:** 28 tình huống · 56 câu hỏi Việt–Anh · 336 cặp query–document/mô hình.
 
+## Mới: retrieval + reranking trên Colab
+
+[Mở notebook Colab](https://colab.research.google.com/github/Achitechture-suggestive-system/rerank-benchmark/blob/fix/cohere-rate-limit/notebooks/retrieval_rerank_colab.ipynb) · [Notebook trong repo](notebooks/retrieval_rerank_colab.ipynb) · [Nghiên cứu, catalog và cách đọc kết quả](docs/RETRIEVAL_RERANK_RESEARCH.md)
+
+Suite mới có **9 embedding → 20 phương pháp retrieval** (BM25, TF-IDF, dense và BM25+dense RRF), **15 reranker**, chạy trên corpus 168 ID. Chọn `RUN_MODE="full"` trên A100 để bao gồm model lớn; `"t4"` chọn nhóm nhỏ. Notebook cô lập Python 3.12 / Transformers, kiểm tra CUDA bằng phép tính GPU thật, checkpoint từng query, lưu Drive và tải ZIP. `FULL_MATRIX=True` chạy mọi cặp local; `API_ALL_POOLS=True` mới mở mọi cặp Cohere vì có quota/phí.
+
+**Đây là mở rộng danh mục và pipeline, không phải tuyên bố đã đo đủ 15 reranker.** Báo cáo mới được tạo trong thư mục chạy của bạn và ghi rõ complete/failed/skipped/missing. Những số liệu phía dưới là bài rerank sáu tài liệu cố định trước đây, không được trộn với kết quả retrieval mới. Nhãn mới vẫn chỉ phủ sáu tài liệu/query; suite báo Hole@K để lộ giới hạn này.
+
+Kiểm tra runner trên CPU, không cần tải model:
+
+```bash
+python3 -m unittest discover -s tests -q
+python3 -m benchmark.suite retrieve --profile cpu --device cpu --dtype float32 --output results/scratch/lexical --resume
+python3 -m benchmark.suite report --output results/scratch/lexical
+```
+
+---
+
 | Tên dùng trong báo cáo | Checkpoint / API model ID |
 | --- | --- |
 | BGE M3 | `BAAI/bge-reranker-v2-m3` |
@@ -479,9 +497,33 @@ Adapter dùng custom code của checkpoint và yêu cầu pin immutable SHA đ�
 
 Cấu hình `COHERE_API_KEY` trong môi trường trước khi chạy; không lưu key vào repo, JSON hay README. Adapter dùng HTTPS bằng thư viện chuẩn, không cần Cohere SDK. Lệnh này gửi fixture tổng hợp lên API và sử dụng quota tài khoản; mỗi query một request cộng một request warm-up, chưa tính retry.
 
+Trial key của Cohere có giới hạn Rerank theo phút. Với trial key, nên pacing khoảng 6.2 giây giữa các request bằng `--cohere-min-interval 6.2`; adapter cũng đọc `Retry-After` và dùng exponential backoff cho HTTP 429/5xx. Nếu một run bị ngắt sau một số query, dùng `--resume` trên đúng thư mục output để tiếp tục prefix đã lưu, không gửi lại warm-up hoặc các query đã hoàn tất.
+
 ```powershell
-python -m benchmark.run --models cohere-pro --max-length 1024 --output results/cohere-pro-new
-python -m benchmark.run --models cohere-fast --max-length 1024 --output results/cohere-fast-new
+python -m benchmark.run `
+  --models cohere-pro `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --output results/cohere-pro-new
+python -m benchmark.run `
+  --models cohere-fast `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --output results/cohere-fast-new
+```
+
+Tiếp tục artifact bị lỗi/gián đoạn:
+
+```powershell
+python -m benchmark.run `
+  --models cohere-pro `
+  --max-length 1024 `
+  --cohere-min-interval 6.2 `
+  --cohere-max-attempts 8 `
+  --resume `
+  --output results/cohere-pro-new
 ```
 
 Khi thiếu key, runner ghi `skipped`. Lỗi inference/API ghi `failed` và giữ các record đã hoàn tất; không biến failure thành score 0. API phải trả đủ mỗi candidate đúng một lần; adapter ánh xạ qua `index`, không nhầm thứ tự response với thứ tự input.

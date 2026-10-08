@@ -1,10 +1,12 @@
 import json
 import math
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-from benchmark.backends import BM25, cohere_scores
+from benchmark.backends import BM25, Cohere, cohere_scores
 from benchmark.metrics import aggregate, paired_comparison, query_metrics, rank_ids, validate_dataset
 from benchmark.report import read_reports, generate
 from benchmark.run import ROOT
@@ -67,6 +69,35 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(cohere_scores(result, 3), [.4, .1, .9])
         with self.assertRaises(ValueError):
             cohere_scores(result, 4)
+
+    def test_cohere_retry_after_parsing(self):
+        self.assertEqual(Cohere._retry_after_seconds({"Retry-After": "12"}), 12.0)
+        self.assertIsNone(Cohere._retry_after_seconds({}))
+
+    def test_cohere_retry_after_http_date_is_nonnegative(self):
+        self.assertGreaterEqual(Cohere._retry_after_seconds({"Retry-After": "Wed, 21 Oct 2015 07:28:00 GMT"}), 0.0)
+
+    def test_resume_continues_a_partial_artifact(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "bm25"
+            command = [sys.executable, "-m", "benchmark.run", "--models", "bm25", "--output", str(output)]
+            subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+            artifact = output / "bm25.json"
+            report = json.loads(artifact.read_text(encoding="utf-8"))
+            report["status"] = "failed"
+            report["records"] = report["records"][:2]
+            report["completed_queries"] = 2
+            report.pop("summary", None)
+            report.pop("by_track", None)
+            report.pop("by_category", None)
+            report.pop("by_language_core", None)
+            report.pop("performance", None)
+            artifact.write_text(json.dumps(report), encoding="utf-8")
+            subprocess.run(command + ["--resume"], cwd=ROOT, check=True, capture_output=True, text=True)
+            resumed = json.loads(artifact.read_text(encoding="utf-8"))
+            self.assertEqual(resumed["status"], "complete")
+            self.assertEqual(resumed["completed_queries"], 56)
+            self.assertEqual(resumed["resume_count"], 1)
 
     def test_bm25_reordering_and_relevant_document(self):
         model = BM25()

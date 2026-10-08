@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import subprocess
@@ -70,18 +71,44 @@ def worker(args):
     outdir.mkdir(parents=True, exist_ok=True)
     name = args.models[0]
     target = outdir / (name + ".json")
-    if target.exists():
-        raise SystemExit(f"Refusing to overwrite {target}; choose a new --output directory")
-    report = dict(schema_version=1, model=name, model_id=MODEL_IDS[name], status="starting",
-                  started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                  dataset_sha256=sha(dataset), implementation_sha256=source_hash(),
-                  query_ids=[r["id"] for r in rows], selected_queries=len(rows), full_dataset=not bool(args.limit),
-                  hardware=hardware(), config=vars(args).copy(), records=[])
+    query_ids = [r["id"] for r in rows]
+    resuming = target.exists()
+    if resuming and not args.resume:
+        raise SystemExit(f"Refusing to overwrite {target}; choose a new --output directory or pass --resume")
+    if resuming:
+        report = json.loads(target.read_text(encoding="utf-8"))
+        if report.get("model") != name or report.get("dataset_sha256") != sha(dataset):
+            raise SystemExit(f"Cannot resume {target}: model or dataset hash differs")
+        if report.get("query_ids") != query_ids:
+            raise SystemExit(f"Cannot resume {target}: query order differs")
+        if report.get("status") == "complete":
+            raise SystemExit(f"Refusing to resume completed artifact {target}")
+        records = report.get("records", [])
+        if [record.get("id") for record in records] != query_ids[:len(records)]:
+            raise SystemExit(f"Cannot resume {target}: existing records are not a prefix of the dataset")
+        score_keys = ("device", "dtype", "batch_size", "max_length", "threads", "seed", "revision",
+                      "cutoff_layer", "compress_ratio", "compress_layers")
+        if report.get("implementation_sha256") != source_hash() or any(
+                report.get("config", {}).get(key) != getattr(args, key) for key in score_keys):
+            raise SystemExit(f"Cannot resume {target}: code/scoring config changed; use a new output directory")
+        for row, record in zip(rows, records):
+            ids = [doc["id"] for doc in row["candidates"]]
+            if record.get("candidate_ids") != ids or set(record["scores"]) != set(ids) or rank_ids(ids, [record["scores"][key] for key in ids]) != record["ranking"] or query_metrics(row, record["ranking"], record["scores"]) != record["metrics"]:
+                raise SystemExit(f"Cannot resume {target}: invalid scores/ranking/metrics")
+        report.setdefault("resume_sessions", []).append(dict(started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), hardware=hardware(), config=vars(args).copy()))
+        report.update(status="starting", resume_count=report.get("resume_count", 0) + 1)
+        report.pop("reason", None)
+    else:
+        report = dict(schema_version=1, model=name, model_id=MODEL_IDS[name], status="starting",
+                      started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                      dataset_sha256=sha(dataset), implementation_sha256=source_hash(),
+                      query_ids=query_ids, selected_queries=len(rows), full_dataset=not bool(args.limit),
+                      hardware=hardware(), config=vars(args).copy(), records=[])
     write_json(target, report)
     start = time.perf_counter()
     backend = None
     try:
-        if name in ("qwen4b", "gemma") and not args.allow_large_models:
+        if name in ("qwen4b", "qwen8b", "gemma") and not args.allow_large_models:
             report.update(status="skipped", reason="Large model loading disabled for this resource-constrained run; rerun on a suitable machine with --allow-large-models")
             return
         if name.startswith("cohere-") and not os.environ.get("COHERE_API_KEY"):
@@ -91,12 +118,17 @@ def worker(args):
         backend = make_backend(name, args)
         report["load_seconds"] = time.perf_counter() - load_start
         report["backend"] = backend.info
-        warm = time.perf_counter()
-        backend.score("Which city is the capital of France?", ["Paris is the capital of France.", "A banana is a fruit."])
-        report["warmup_seconds"] = time.perf_counter() - warm
+        if not report["records"]:
+            warm = time.perf_counter()
+            backend.score("Which city is the capital of France?", ["Paris is the capital of France.", "A banana is a fruit."])
+            report["warmup_seconds"] = time.perf_counter() - warm
+        else:
+            report["warmup_seconds"] = report.get("warmup_seconds", 0.0)
+            report["warmup_skipped_on_resume"] = True
         if args.device == "cuda" and hasattr(backend, "torch"):
             backend.torch.cuda.reset_peak_memory_stats()
-        for index, row in enumerate(rows):
+        start_index = len(report["records"])
+        for index, row in enumerate(rows[start_index:], start=start_index):
             # Deliberately strip judgments/rationales/IDs at this boundary.
             before = time.perf_counter()
             values, audit = backend.score(row["query"], [d["text"] for d in row["candidates"]])
@@ -150,12 +182,16 @@ def main():
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--allow-large-models", action="store_true")
     parser.add_argument("--revision", help="Hugging Face revision; Gemma requires an immutable SHA")
+    parser.add_argument("--trust-remote-code", action="store_true", help="Allow pinned GTE/Jina publisher modules")
+    parser.add_argument("--resume", action="store_true", help="Resume a failed/partial artifact without overwriting it")
+    parser.add_argument("--cohere-min-interval", type=float, default=6.2, help="Minimum seconds between Cohere request starts (trial-key-safe default)")
+    parser.add_argument("--cohere-max-attempts", type=int, default=8, help="Maximum attempts for retryable Cohere responses")
     parser.add_argument("--cutoff-layer", type=int, default=28)
     parser.add_argument("--compress-ratio", type=int, choices=[1, 2, 4, 8], default=2)
     parser.add_argument("--compress-layers", type=int, nargs="+", default=[24])
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
-    if args.batch_size < 1 or args.max_length < 128 or args.threads < 1 or args.limit < 0:
+    if args.batch_size < 1 or args.max_length < 128 or args.threads < 1 or args.limit < 0 or not math.isfinite(args.cohere_min_interval) or args.cohere_min_interval < 0 or args.cohere_max_attempts < 1:
         parser.error("Invalid batch size, context length, thread count, or query limit")
     if not 8 <= args.cutoff_layer <= 42 or any(n not in [8, 16, 24, 32, 40] for n in args.compress_layers):
         parser.error("Invalid Gemma layer configuration")
